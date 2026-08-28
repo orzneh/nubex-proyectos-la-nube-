@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>NUBEX - Comprar</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- Barra de navegacion superior, igual en todas las paginas internas -->
+  <div class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <span class="icono-nube">☁️</span> NUBEX
+    </a>
+    <div class="navbar-links">
+      <a href="comprar.html" class="activo">Comprar</a>
+      <a href="administrar.html">Administrar</a>
+      <a href="soporte.html">Soporte</a>
+      <a href="acerca.html">Acerca</a>
+    </div>
+    <a href="login.html" class="navbar-cuenta">
+      <span class="icono-usuario">👤</span> Cuenta
+    </a>
+  </div>
+
+  <!-- Las 3 tarjetas de planes. Cada boton tiene "data-plan" con el
+       nombre exacto del plan, que usa script.js para saber cual elegiste -->
+  <div class="planes-contenedor">
+
+    <div class="plan-tarjeta">
+      <h2>Plan Normal</h2>
+      <hr>
+      <ul>
+        <li>1TB de espacio</li>
+        <li>Soporte no prioritario</li>
+        <li>Libre de anuncios</li>
+      </ul>
+      <div class="plan-precio">$10/mes &nbsp;•&nbsp; $90/año</div>
+      <button class="boton boton-primario boton-elegir-plan" data-plan="Plan Normal" style="margin-top:16px;">
+        Elegir plan
+      </button>
+    </div>
+
+    <div class="plan-tarjeta">
+      <h2>Plan Premium</h2>
+      <hr>
+      <ul>
+        <li>Espacio ilimitado</li>
+        <li>Soporte prioritario</li>
+        <li>Libre de anuncios</li>
+      </ul>
+      <div class="plan-precio">$25/mes &nbsp;•&nbsp; $190/año</div>
+      <button class="boton boton-primario boton-elegir-plan" data-plan="Plan Premium" style="margin-top:16px;">
+        Elegir plan
+      </button>
+    </div>
+
+    <div class="plan-tarjeta">
+      <h2>Plan Gratuito</h2>
+      <hr>
+      <ul>
+        <li>500 GB de espacio</li>
+        <li>Soporte no prioritario</li>
+        <li>Con anuncios</li>
+      </ul>
+      <div class="plan-precio">Gratis</div>
+      <button class="boton boton-elegir-plan" data-plan="Plan Gratuito" style="margin-top:16px;">
+        Elegir plan
+      </button>
+    </div>
+
+  </div>
+
+  <div class="pie-pagina">NUBEX © 2026 - Wireframe / Boceto virtual</div>
+
+  <script src="script.js"></script>
+</body>
+</html>

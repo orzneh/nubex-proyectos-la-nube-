@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>NUBEX - Soporte</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <span class="icono-nube">☁️</span> NUBEX
+    </a>
+    <div class="navbar-links">
+      <a href="comprar.html">Comprar</a>
+      <a href="administrar.html">Administrar</a>
+      <a href="soporte.html" class="activo">Soporte</a>
+      <a href="acerca.html">Acerca</a>
+    </div>
+    <a href="login.html" class="navbar-cuenta">
+      <span class="icono-usuario">👤</span> Cuenta
+    </a>
+  </div>
+
+  <div class="formulario-contenedor">
+    <h1>Contactar a soporte</h1>
+    <p style="text-align:center; margin-top:-10px; color:#666;">
+      Contanos tu problema y un asesor se va a comunicar con vos.
+    </p>
+
+    <div id="mensaje-soporte" class="mensaje"></div>
+
+    <form id="form-soporte">
+      <div class="campo-formulario">
+        <label for="nombre_user">Tu nombre</label>
+        <input type="text" id="nombre_user" maxlength="32" required>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="num_tel_user">Número de teléfono</label>
+        <input type="tel" id="num_tel_user" maxlength="10" required>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="solicitud_user">¿En qué te podemos ayudar?</label>
+        <textarea id="solicitud_user" rows="5" maxlength="1000" required></textarea>
+      </div>
+
+      <button type="submit" class="boton boton-primario">Enviar solicitud</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

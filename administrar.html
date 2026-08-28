@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>NUBEX - Administrar</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <span class="icono-nube">☁️</span> NUBEX
+    </a>
+    <div class="navbar-links">
+      <a href="comprar.html">Comprar</a>
+      <a href="administrar.html" class="activo">Administrar</a>
+      <a href="soporte.html">Soporte</a>
+      <a href="acerca.html">Acerca</a>
+    </div>
+    <a href="login.html" class="navbar-cuenta">
+      <span class="icono-usuario">👤</span> <span id="etiqueta-nombre-cliente">Cuenta</span>
+    </a>
+  </div>
+
+  <div class="layout-admin">
+
+    <!-- ===================== MENU LATERAL ===================== -->
+    <div class="menu-lateral">
+      <div class="menu-lateral-titulo">☰ Sugeridos</div>
+
+      <div class="menu-item activo" data-seccion="recientes">
+        <span class="punto"></span> Recientes
+      </div>
+      <div class="menu-item" data-seccion="cargas">
+        <span class="punto"></span> Cargas
+      </div>
+      <div class="menu-item" data-seccion="papelera">
+        <span class="punto"></span> Papelera
+      </div>
+      <div class="menu-item">
+        <span class="punto"></span> Configuración
+      </div>
+      <div class="menu-item">
+        <span class="punto"></span> Ayuda y comentarios
+      </div>
+      <div class="menu-item">
+        <span class="punto"></span> Almacenamiento
+      </div>
+    </div>
+
+    <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+    <div class="contenido-admin">
+      <h1 id="titulo-seccion">Recientes</h1>
+
+      <!-- Barra de espacio ocupado (espacio_ocup / espacio_libre) -->
+      <div class="barra-espacio-contenedor">
+        <div id="barra-espacio-relleno" class="barra-espacio-relleno" style="width:0%;"></div>
+      </div>
+      <p id="texto-espacio" style="font-size:13px; color:#777; margin-top:0;"></p>
+
+      <!-- Zona para subir archivos nuevos (archivos_subidos) -->
+      <label for="input-subir-archivo" class="zona-subida" style="display:block; cursor:pointer;">
+        📤 Hacé clic acá para subir un archivo nuevo
+      </label>
+      <input type="file" id="input-subir-archivo" style="display:none;">
+
+      <!-- Ac se dibujan las tarjetas de archivos con JavaScript -->
+      <div id="lista-archivos" class="fila-archivos"></div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

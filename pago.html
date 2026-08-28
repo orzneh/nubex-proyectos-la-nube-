@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>NUBEX - Pago</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <span class="icono-nube">☁️</span> NUBEX
+    </a>
+    <div class="navbar-links">
+      <a href="comprar.html" class="activo">Comprar</a>
+      <a href="administrar.html">Administrar</a>
+      <a href="soporte.html">Soporte</a>
+      <a href="acerca.html">Acerca</a>
+    </div>
+    <a href="login.html" class="navbar-cuenta">
+      <span class="icono-usuario">👤</span> Cuenta
+    </a>
+  </div>
+
+  <div class="formulario-contenedor">
+    <h1>Finalizar compra</h1>
+    <p style="text-align:center; margin-top:-10px;">
+      Estas suscribiendo al <strong id="etiqueta-plan-elegido">...</strong>
+    </p>
+
+    <!-- Este mensaje lo muestra script.js segun si el pago sale bien o mal -->
+    <div id="mensaje-pago" class="mensaje"></div>
+
+    <form id="form-pago">
+
+      <div class="campo-formulario">
+        <label for="nombre_suscriptor">Nombre del titular</label>
+        <input type="text" id="nombre_suscriptor" maxlength="30" required>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="num_tarjeta">Número de tarjeta (16 dígitos)</label>
+        <input type="text" id="num_tarjeta" maxlength="16" placeholder="0000000000000000" required>
+      </div>
+
+      <div class="fila-doble">
+        <div class="campo-formulario">
+          <label for="expir_tarjeta">Vencimiento (MM/AA)</label>
+          <input type="text" id="expir_tarjeta" maxlength="10" placeholder="MM/AA" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="cvv_tarjeta">CVV</label>
+          <input type="text" id="cvv_tarjeta" maxlength="3" placeholder="123" required>
+        </div>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="direc_user">Dirección</label>
+        <input type="text" id="direc_user" maxlength="30" required>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="direc2_user">Dirección 2 (opcional)</label>
+        <input type="text" id="direc2_user" maxlength="30">
+      </div>
+
+      <div class="fila-doble">
+        <div class="campo-formulario">
+          <label for="pais">País</label>
+          <input type="text" id="pais" maxlength="20" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="provincia">Provincia</label>
+          <input type="text" id="provincia" maxlength="20" required>
+        </div>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="codigo_postal">Código postal</label>
+        <input type="text" id="codigo_postal" maxlength="10" required>
+      </div>
+
+      <button type="submit" class="boton boton-primario">Confirmar pago</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>NUBEX - Crear cuenta</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <span class="icono-nube">☁️</span> NUBEX
+    </a>
+    <div class="navbar-links"></div>
+    <div></div>
+  </div>
+
+  <div class="formulario-contenedor">
+    <h1>Crear cuenta</h1>
+
+    <div id="mensaje-registro" class="mensaje"></div>
+
+    <form id="form-registro">
+      <div class="campo-formulario">
+        <label for="username_nuevo">Nombre de usuario</label>
+        <input type="text" id="username_nuevo" maxlength="10" required>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="mail_nuevo">Correo electrónico</label>
+        <input type="email" id="mail_nuevo" maxlength="70" required>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="password_nuevo">Contraseña</label>
+        <input type="password" id="password_nuevo" maxlength="10" required>
+      </div>
+
+      <button type="submit" class="boton boton-primario">Crear cuenta</button>
+    </form>
+
+    <div class="enlace-secundario">
+      ¿Ya tenés cuenta? <a href="login.html">Iniciá sesión</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

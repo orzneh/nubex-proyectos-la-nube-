@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>NUBEX - Iniciar sesión</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <span class="icono-nube">☁️</span> NUBEX
+    </a>
+    <div class="navbar-links"></div>
+    <div></div>
+  </div>
+
+  <div class="formulario-contenedor">
+    <h1>Iniciar sesión</h1>
+
+    <!-- script.js escribe aca los mensajes de error o exito -->
+    <div id="mensaje-login" class="mensaje"></div>
+
+    <form id="form-login">
+      <div class="campo-formulario">
+        <label for="correo_electronico">Correo electrónico</label>
+        <input type="email" id="correo_electronico" maxlength="30" required>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" maxlength="20" required>
+      </div>
+
+      <button type="submit" class="boton boton-primario">Ingresar</button>
+    </form>
+
+    <!-- Opcion alternativa: entrar con "llave de acceso" en vez de password -->
+    <hr style="margin:26px 0; border:none; border-top:1px solid var(--color-gris-linea);">
+
+    <div class="campo-formulario">
+      <label for="llave_acceso">O ingresa con tu llave de acceso</label>
+      <input type="text" id="llave_acceso" maxlength="30" placeholder="Llave de acceso">
+    </div>
+    <button type="button" id="boton-llave-acceso" class="boton" style="width:100%;">
+      Ingresar con llave
+    </button>
+
+    <div class="enlace-secundario">
+      ¿No tenés cuenta? <a href="registro.html">Registrate acá</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
