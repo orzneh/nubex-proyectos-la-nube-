@@ -1,4 +1,4 @@
-* ==========================================================
+/* ==========================================================
    ESTILOS.CSS - Hoja de estilos de NUBEX
    ==========================================================
    Esta es la UNICA hoja de estilos, la usan todas las paginas.
@@ -90,15 +90,19 @@
 .franja-confianza {
   display: flex;
   justify-content: center;
+  align-items: center;   /* centra verticalmente los items entre sí */
   gap: 60px;
   flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
   padding: 0 20px 60px 20px;
   text-align: center;
 }
 
 .franja-confianza .dato {
   display: flex;
-  flex-direction: center;
+  flex-direction: column;
+  align-items: center;   /* centra número y etiqueta dentro de cada dato */
 }
 
 .franja-confianza .dato-numero {
