@@ -98,7 +98,7 @@
 
 .franja-confianza .dato {
   display: flex;
-  flex-direction: column;
+  flex-direction: center;
 }
 
 .franja-confianza .dato-numero {
