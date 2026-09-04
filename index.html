@@ -1,4 +1,23 @@
-<!DOCTYPE html>
+!DOCTYPE html>
+<!-- ==========================================================
+     ⭐ CAMBIOS NUEVOS EN ESTA PAGINA (index.html)
+     ==========================================================
+     Convertí index.html de una pantalla vacía (nube + título +
+     4 botones) en una landing page completa. Se agregaron estas
+     secciones nuevas, en este orden, todas con las clases nuevas
+     que están al principio de estilos.css:
+
+       1. Franja de confianza  -> 3 datos chicos debajo del hero
+       2. Cómo funciona        -> 3 pasos numerados (es una secuencia
+                                   real: subir -> ordenar -> compartir)
+       3. Beneficios           -> 3 tarjetas (mismo texto que acerca.html)
+       4. Planes               -> resumen de los 3 planes de comprar.html
+       5. Llamado a la acción  -> franja de cierre antes del pie
+       6. Pie de página        -> version mas completa, con columnas
+
+     No toqué el hero original (nube + título + botones), ni la
+     navbar, ni ninguna otra página del sitio, ni script.js.
+     ========================================================== -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -17,16 +36,144 @@
     </a>
   </div>
 
-  <!-- Contenido central: nube, titulo y botones -->
+  <!-- Contenido central: nube, titulo y botones (hero original, sin cambios) -->
   <div class="inicio-contenedor">
     <div class="inicio-nube">☁️</div>
     <div class="inicio-titulo">NUBEX</div>
 
     <div class="inicio-botones">
-      <a href="comprar.html" class="boton">Comprar</a>
+      <a href="comprar.html" class="boton boton-primario">Comprar</a>
       <a href="administrar.html" class="boton">Administrar</a>
       <a href="soporte.html" class="boton">Soporte</a>
       <a href="acerca.html" class="boton">Acerca</a>
+    </div>
+  </div>
+
+  <!-- ⭐ NUEVO: franja de confianza con datos chicos -->
+  <div class="franja-confianza">
+    <div class="dato">
+      <span class="dato-numero">500 GB</span>
+      <span class="dato-etiqueta">gratis para empezar</span>
+    </div>
+    <div class="dato">
+      <span class="dato-numero">3</span>
+      <span class="dato-etiqueta">planes a elección</span>
+    </div>
+    <div class="dato">
+      <span class="dato-numero">24/7</span>
+      <span class="dato-etiqueta">soporte disponible</span>
+    </div>
+  </div>
+
+  <!-- ⭐ NUEVO: como funciona, en 3 pasos -->
+  <div class="seccion-landing">
+    <div class="seccion-landing-titulo">
+      <h2>Cómo funciona</h2>
+      <p>De crear tu cuenta a compartir tu primer archivo en tres pasos.</p>
+    </div>
+    <div class="pasos-contenedor">
+      <div class="paso">
+        <div class="paso-numero">1</div>
+        <h3>Subí tus archivos</h3>
+        <p>Arrastrá o elegí los archivos que querés guardar desde el panel de Administrar.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-numero">2</div>
+        <h3>Ordenalos</h3>
+        <p>Los vas a encontrar clasificados en Recientes, Cargas o Papelera según corresponda.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-numero">3</div>
+        <h3>Compartilos</h3>
+        <p>Con un clic, cualquier archivo puede compartirse con quien vos elijas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⭐ NUEVO: beneficios (mismo contenido que la pagina Acerca) -->
+  <div class="seccion-landing" style="border-top:none; padding-top:0;">
+    <div class="seccion-landing-titulo">
+      <h2>Todo tu espacio, en un solo lugar</h2>
+      <p>Guardá, ordená y compartí tus archivos desde cualquier dispositivo.</p>
+    </div>
+    <div class="beneficios-contenedor">
+      <div class="beneficio-tarjeta">
+        <div class="beneficio-icono">📦</div>
+        <h3>Guardar</h3>
+        <p>Subí cualquier tipo de archivo y quedá tranquilo: nunca vas a perder tu trabajo.</p>
+      </div>
+      <div class="beneficio-tarjeta">
+        <div class="beneficio-icono">🗂️</div>
+        <h3>Ordenar</h3>
+        <p>Encontrá lo que buscás rápido, separado por recientes, cargas y papelera.</p>
+      </div>
+      <div class="beneficio-tarjeta">
+        <div class="beneficio-icono">🔗</div>
+        <h3>Compartir</h3>
+        <p>Mandá un archivo a quien lo necesite en segundos, sin adjuntarlo en un mail.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⭐ NUEVO: franja resumen de planes -->
+  <div class="franja-planes">
+    <div class="seccion-landing-titulo">
+      <h2>Un plan para cada necesidad</h2>
+      <p>Empezá gratis y subí de plan cuando lo necesites.</p>
+    </div>
+    <div class="franja-planes-tarjetas">
+      <div class="plan-mini">
+        <h3>Gratuito</h3>
+        <div class="plan-mini-precio">Gratis</div>
+        <div class="plan-mini-detalle">500 GB · con anuncios</div>
+      </div>
+      <div class="plan-mini destacado">
+        <h3>Normal</h3>
+        <div class="plan-mini-precio">$10/mes</div>
+        <div class="plan-mini-detalle">1 TB · sin anuncios</div>
+      </div>
+      <div class="plan-mini">
+        <h3>Premium</h3>
+        <div class="plan-mini-precio">$25/mes</div>
+        <div class="plan-mini-detalle">Espacio ilimitado · soporte prioritario</div>
+      </div>
+    </div>
+    <div class="franja-planes-cta">
+      <a href="comprar.html" class="boton boton-primario">Ver todos los planes</a>
+    </div>
+  </div>
+
+  <!-- ⭐ NUEVO: llamado a la accion final -->
+  <div class="cta-final">
+    <h2>Empezá a guardar tus archivos hoy</h2>
+    <p>Crear una cuenta es gratis y te lleva menos de un minuto.</p>
+    <a href="registro.html" class="boton boton-primario">Crear cuenta gratis</a>
+  </div>
+
+  <!-- ⭐ NUEVO: pie de pagina con columnas -->
+  <div class="pie-pagina-landing">
+    <div class="pie-pagina-landing-columnas">
+      <div class="pie-pagina-landing-marca">
+        <a href="index.html" class="navbar-logo">
+          <span class="icono-nube">☁️</span> NUBEX
+        </a>
+        <p>Almacenamiento en la nube simple, para guardar, ordenar y compartir tus archivos desde cualquier lugar.</p>
+      </div>
+      <div class="pie-pagina-landing-links">
+        <h4>Sitio</h4>
+        <a href="comprar.html">Comprar</a>
+        <a href="administrar.html">Administrar</a>
+        <a href="soporte.html">Soporte</a>
+        <a href="acerca.html">Acerca</a>
+      </div>
+      <div class="pie-pagina-landing-links">
+        <h4>Cuenta</h4>
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Crear cuenta</a>
+      </div>
+    </div>
+    <div class="pie-pagina-landing-copy">
+      NUBEX © 2026 - Wireframe / Boceto virtual
     </div>
   </div>
 
