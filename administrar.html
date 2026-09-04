@@ -37,13 +37,13 @@
       <div class="menu-item" data-seccion="papelera">
         <span class="punto"></span> Papelera
       </div>
-      <div class="menu-item">
+      <div class="menu-item" data-seccion="configuracion">
         <span class="punto"></span> Configuración
       </div>
-      <div class="menu-item">
+      <div class="menu-item" data-seccion="ayuda">
         <span class="punto"></span> Ayuda y comentarios
       </div>
-      <div class="menu-item">
+      <div class="menu-item" data-seccion="almacenamiento">
         <span class="punto"></span> Almacenamiento
       </div>
     </div>
@@ -52,20 +52,35 @@
     <div class="contenido-admin">
       <h1 id="titulo-seccion">Recientes</h1>
 
-      <!-- Barra de espacio ocupado (espacio_ocup / espacio_libre) -->
-      <div class="barra-espacio-contenedor">
-        <div id="barra-espacio-relleno" class="barra-espacio-relleno" style="width:0%;"></div>
+      <!-- Mensaje general del panel (subida de archivos, configuracion, ayuda, etc) -->
+      <div id="mensaje-admin" class="mensaje"></div>
+
+      <!-- ===== Panel de archivos (Recientes / Cargas / Papelera) ===== -->
+      <div id="panel-archivos">
+        <!-- Barra de espacio ocupado (espacio_ocup / espacio_libre) -->
+        <div class="barra-espacio-contenedor">
+          <div id="barra-espacio-relleno" class="barra-espacio-relleno" style="width:0%;"></div>
+        </div>
+        <p id="texto-espacio" style="font-size:13px; color:#777; margin-top:0;"></p>
+
+        <!-- Zona para subir archivos nuevos (archivos_subidos) -->
+        <label for="input-subir-archivo" class="zona-subida" style="display:block; cursor:pointer;">
+          📤 Hacé clic acá para subir un archivo nuevo
+        </label>
+        <input type="file" id="input-subir-archivo" style="display:none;">
+
+        <!-- Ac se dibujan las tarjetas de archivos con JavaScript -->
+        <div id="lista-archivos" class="fila-archivos"></div>
       </div>
-      <p id="texto-espacio" style="font-size:13px; color:#777; margin-top:0;"></p>
 
-      <!-- Zona para subir archivos nuevos (archivos_subidos) -->
-      <label for="input-subir-archivo" class="zona-subida" style="display:block; cursor:pointer;">
-        📤 Hacé clic acá para subir un archivo nuevo
-      </label>
-      <input type="file" id="input-subir-archivo" style="display:none;">
+      <!-- ===== Panel de Configuración (antes vacío) ===== -->
+      <div id="panel-configuracion" style="display:none;"></div>
 
-      <!-- Ac se dibujan las tarjetas de archivos con JavaScript -->
-      <div id="lista-archivos" class="fila-archivos"></div>
+      <!-- ===== Panel de Ayuda y comentarios (antes vacío) ===== -->
+      <div id="panel-ayuda" style="display:none;"></div>
+
+      <!-- ===== Panel de Almacenamiento (antes vacío) ===== -->
+      <div id="panel-almacenamiento" style="display:none;"></div>
     </div>
 
   </div>
