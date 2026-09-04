@@ -1,4 +1,4 @@
-/* ==========================================================
+* ==========================================================
    ESTILOS.CSS - Hoja de estilos de NUBEX
    ==========================================================
    Esta es la UNICA hoja de estilos, la usan todas las paginas.
@@ -6,16 +6,380 @@
    cambiar el color de fondo, de los bordes o de los botones
    de TODO el sitio, solo tenés que cambiar los valores aca. */
 
+/* ==========================================================
+   ⭐⭐⭐ CAMBIOS NUEVOS (todo el sitio en azul y negro, sin blanco)
+   ==========================================================
+   Antes solo algunas secciones (navbar, hero, franja de planes,
+   pie de página) tenían fondo oscuro; el resto del sitio seguía
+   siendo blanco (tarjetas, formularios, panel de Administrar).
+
+   Ahora --color-fondo (la variable que define el fondo general
+   de TODAS las páginas) pasó de blanco a el mismo negro-azulado
+   que ya usaban esas secciones, así que se propaga solo a todo
+   el sitio: portada, comprar, administrar, login, registro, pago,
+   soporte y acerca.
+
+   Además:
+   - --color-borde ahora es azul (antes era casi negro), así que
+     todos los bordes tipo "boceto" (botones, tarjetas de planes,
+     tarjetas de archivos, el formulario) quedaron en azul.
+   - Los textos grises (#666/#777/#999) se reemplazaron por
+     --color-texto-mutado, un celeste apagado que se lee bien
+     sobre el fondo oscuro.
+   - Los campos de formulario (input/textarea/select) ahora tienen
+     fondo oscuro explícito, porque si no el navegador los pinta
+     blancos por defecto.
+   - El texto del botón primario es negro (no blanco) sobre fondo
+     azul, para no salirse de la paleta.
+   - Los mensajes de éxito/error ya no tienen fondo claro: ahora
+     son oscuros con el borde y el texto en verde/rojo.
+   ========================================================== */
+
+/* ==========================================================
+   ⭐⭐ CAMBIOS NUEVOS (tema azul y negro para todo el sitio)
+   ==========================================================
+   Le di una paleta azul/negro mas llamativa a TODO el sitio
+   (no solo a index.html), porque todas las paginas comparten
+   este mismo archivo de estilos. Los cambios fueron:
+
+   1) Variables de color en :root:
+      - --color-acento pasó de un celeste suave (#2f80ed) a un
+        azul mas fuerte y saturado (#0047FF).
+      - Se agregaron --color-oscuro (#05070f, casi negro con
+        tinte azul) y --color-texto-claro (para texto legible
+        arriba de fondos oscuros).
+      Como el resto del sitio ya usaba estas variables en
+      bordes, botones y barras, el cambio se propaga solo a
+      todas las paginas.
+
+   2) Secciones puntuales que pasé a fondo oscuro (negro) con
+      detalles en azul, para que el contraste sea mas fuerte:
+      - .navbar (la barra de arriba, en TODAS las paginas)
+      - .inicio-contenedor (el "hero" de la portada)
+      - .franja-planes y .cta-final (en la landing)
+      - .pie-pagina-landing (el pie de página nuevo)
+
+   3) Los botones primarios (.boton-primario) ahora son azules
+      en vez de negros, para que resalten como llamado a la
+      accion en todo el sitio (comprar, pagar, crear cuenta, etc).
+
+   Cada cambio puntual está marcado en el lugar donde ocurre
+   con un comentario "⭐ AZUL/NEGRO".
+   ========================================================== */
+
+/* ==========================================================
+   ⭐ CAMBIOS NUEVOS (landing page de index.html)
+   ==========================================================
+   Todo lo que sigue en este bloque son clases NUEVAS que
+   agregué para convertir index.html en una landing page
+   completa (antes solo tenía la nube, el título y 4 botones).
+   Reutilizan las mismas variables de color y el mismo estilo
+   "boceto" (bordes finos, esquinas redondeadas) que ya tenía
+   el resto del sitio, no inventé una paleta nueva.
+
+   Secciones que se agregaron a index.html:
+   1) .franja-confianza      -> mini estadísticas debajo del hero
+   2) .seccion-landing       -> contenedor genérico con título + bajada
+   3) .pasos-contenedor      -> "Cómo funciona" en 3 pasos numerados
+   4) .beneficios-contenedor -> 3 tarjetas (Guardar / Ordenar / Compartir)
+   5) .franja-planes         -> resumen chico de los 3 planes + botón
+   6) .cta-final             -> franja de cierre con llamado a la acción
+   7) .pie-pagina-landing    -> pie de página con columnas de links
+   ========================================================== */
+
+.franja-confianza {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  padding: 0 20px 60px 20px;
+  text-align: center;
+}
+
+.franja-confianza .dato {
+  display: flex;
+  flex-direction: column;
+}
+
+.franja-confianza .dato-numero {
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.franja-confianza .dato-etiqueta {
+  font-size: 13px;
+  color: var(--color-texto-mutado);
+  margin-top: 4px;
+}
+
+.seccion-landing {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 70px 24px;
+  border-top: 1px solid var(--color-gris-linea);
+}
+
+.seccion-landing-titulo {
+  text-align: center;
+  margin-bottom: 46px;
+}
+
+.seccion-landing-titulo h2 {
+  font-size: 32px;
+  margin: 0 0 10px 0;
+}
+
+.seccion-landing-titulo p {
+  color: var(--color-texto-mutado);
+  margin: 0;
+}
+
+/* --- Cómo funciona: pasos numerados (es una secuencia real, 1-2-3) --- */
+.pasos-contenedor {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.paso {
+  flex: 1;
+  min-width: 220px;
+  text-align: center;
+}
+
+/* ⭐ AZUL/NEGRO: circulo de cada paso en azul llamativo */
+.paso-numero {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 16px auto;
+  border: var(--grosor-borde) solid var(--color-acento);
+  color: var(--color-acento);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.paso h3 {
+  margin: 0 0 8px 0;
+  font-size: 17px;
+}
+
+.paso p {
+  color: var(--color-texto-mutado);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- Beneficios: 3 tarjetas parejas --- */
+.beneficios-contenedor {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.beneficio-tarjeta {
+  flex: 1;
+  min-width: 230px;
+  border: var(--grosor-borde) solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  padding: 26px;
+}
+
+.beneficio-tarjeta .beneficio-icono {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.beneficio-tarjeta h3 {
+  margin: 0 0 8px 0;
+  font-size: 17px;
+}
+
+.beneficio-tarjeta p {
+  color: var(--color-texto-mutado);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- Franja de planes: version resumida de comprar.html ---
+   ⭐ AZUL/NEGRO: fondo oscuro para que contraste con el resto */
+.franja-planes {
+  background-color: var(--color-oscuro);
+  color: var(--color-texto-claro);
+  padding: 70px 24px;
+}
+
+.franja-planes .seccion-landing-titulo p {
+  color: var(--color-texto-mutado);
+}
+
+.franja-planes-tarjetas {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.plan-mini {
+  background-color: var(--color-oscuro);
+  flex: 1;
+  min-width: 220px;
+  border: var(--grosor-borde) solid var(--color-gris-linea);
+  border-radius: var(--radio-borde);
+  padding: 22px;
+  text-align: center;
+  color: var(--color-texto-claro);
+}
+
+.plan-mini.destacado {
+  border-color: var(--color-acento);
+  border-width: 3px;
+  background-color: #0b1130;
+}
+
+.plan-mini h3 {
+  margin: 0 0 6px 0;
+}
+
+.plan-mini .plan-mini-precio {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: var(--color-acento); /* ⭐ AZUL/NEGRO */
+}
+
+.plan-mini .plan-mini-detalle {
+  color: var(--color-texto-mutado);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.franja-planes-cta {
+  text-align: center;
+  margin-top: 34px;
+}
+
+/* --- Cierre con llamado a la accion ---
+   ⭐ AZUL/NEGRO: fondo negro, titulo en azul */
+.cta-final {
+  text-align: center;
+  padding: 90px 24px;
+  background-color: var(--color-oscuro);
+  color: var(--color-texto-claro);
+}
+
+.cta-final h2 {
+  font-size: 30px;
+  margin: 0 0 12px 0;
+  color: var(--color-acento);
+}
+
+.cta-final p {
+  color: var(--color-texto-mutado);
+  margin: 0 0 28px 0;
+}
+
+/* --- Pie de pagina de la landing (mas completo que .pie-pagina) ---
+   ⭐ AZUL/NEGRO: pie de pagina oscuro, en linea con navbar y hero */
+.pie-pagina-landing {
+  background-color: var(--color-oscuro);
+  color: var(--color-texto-claro);
+  border-top: 2px solid var(--color-acento);
+  padding: 40px 32px 26px 32px;
+}
+
+.pie-pagina-landing .navbar-logo {
+  color: var(--color-texto-claro);
+}
+
+.pie-pagina-landing-columnas {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.pie-pagina-landing-marca {
+  max-width: 260px;
+}
+
+.pie-pagina-landing-marca .navbar-logo {
+  margin-bottom: 10px;
+}
+
+.pie-pagina-landing-marca p {
+  color: var(--color-texto-mutado);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pie-pagina-landing-links h4 {
+  font-size: 13px;
+  margin: 0 0 12px 0;
+  color: var(--color-acento);
+}
+
+.pie-pagina-landing-links a {
+  display: block;
+  font-size: 13px;
+  color: var(--color-texto-mutado);
+  margin-bottom: 8px;
+}
+
+.pie-pagina-landing-links a:hover {
+  color: var(--color-acento);
+}
+
+.pie-pagina-landing-copy {
+  max-width: 900px;
+  margin: 30px auto 0 auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-gris-linea);
+  font-size: 12px;
+  color: var(--color-texto-mutado);
+}
+
+@media (max-width: 700px) {
+  .pasos-contenedor,
+  .beneficios-contenedor {
+    flex-direction: column;
+  }
+}
+/* ================== FIN DE CAMBIOS NUEVOS ================== */
+
 :root {
-  /* --- Paleta de colores (variables CSS) --- */
-  --color-fondo: #ffffff;          /* Fondo general de las paginas */
-  --color-texto: #1a1a1a;          /* Color del texto principal */
-  --color-borde: #1a1a1a;          /* Color de los bordes tipo "boceto" */
-  --color-gris-suave: #f5f5f5;     /* Fondo suave para el menu lateral */
-  --color-gris-linea: #dddddd;     /* Lineas divisorias suaves */
-  --color-acento: #2f80ed;         /* Color de acento (links / foco) */
-  --color-exito: #1e8e3e;          /* Verde para mensajes de exito */
-  --color-error: #d93025;          /* Rojo para mensajes de error */
+  /* --- Paleta de colores (variables CSS) ---
+     ⭐⭐ AZUL/NEGRO TOTAL: ahora TODO el sitio usa esta misma paleta
+     de azul y negro. --color-fondo ya no es blanco, es el mismo
+     negro-azulado que antes solo usaban la navbar y el hero, asi
+     que se propaga automáticamente a cada página y cada componente
+     que use estas variables. */
+  --color-fondo: #05070f;          /* Fondo general de las paginas (antes blanco) */
+  --color-texto: #cfe0ff;          /* Texto principal, celeste claro (antes casi negro) */
+  --color-borde: var(--color-acento); /* Bordes tipo "boceto", ahora en azul (antes negro) */
+  --color-gris-suave: #0b0e1c;     /* Panel/franja un poco mas clara que el fondo, sigue siendo oscura */
+  --color-gris-linea: #232a45;     /* Lineas divisorias, azul oscuro visible sobre el fondo negro */
+  --color-acento: #0047ff;         /* Azul fuerte y llamativo */
+  --color-texto-mutado: #8b96c2;   /* Texto secundario/gris claro con tinte azul (reemplaza los grises #666/#777/#999) */
+  --color-exito: #2ecc71;          /* Verde para mensajes de exito (aclarado para verse sobre fondo oscuro) */
+  --color-error: #ff5c4d;          /* Rojo para mensajes de error (aclarado para verse sobre fondo oscuro) */
+
+  /* Fondo oscuro y texto claro reutilizados en secciones puntuales
+     (ahora son iguales al fondo general, pero se dejan las
+     variables para no romper nada que las referencie) */
+  --color-oscuro: #05070f;
+  --color-texto-claro: #cfe0ff;
 
   /* --- Tipografia --- */
   --fuente-principal: 'Segoe UI', Arial, sans-serif;
@@ -45,12 +409,16 @@ a {
 /* ==========================================================
    BARRA DE NAVEGACION SUPERIOR (se repite en varias paginas)
    ========================================================== */
+/* ⭐ AZUL/NEGRO: la navbar ahora es de fondo negro-azulado en TODAS
+   las paginas, con el texto en claro y el link activo en azul */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 14px 32px;
-  border-bottom: var(--grosor-borde) solid var(--color-gris-linea);
+  background-color: var(--color-oscuro);
+  color: var(--color-texto-claro);
+  border-bottom: var(--grosor-borde) solid var(--color-acento);
 }
 
 .navbar-logo {
@@ -59,6 +427,7 @@ a {
   gap: 8px;
   font-size: 22px;
   font-weight: bold;
+  color: var(--color-texto-claro);
 }
 
 .navbar-logo .icono-nube {
@@ -71,9 +440,21 @@ a {
   font-size: 16px;
 }
 
+.navbar-links a {
+  color: var(--color-texto-claro);
+  opacity: 0.75;
+}
+
+.navbar-links a:hover {
+  opacity: 1;
+}
+
 .navbar-links a.activo {
   font-weight: bold;
   text-decoration: underline;
+  text-decoration-color: var(--color-acento);
+  color: var(--color-acento);
+  opacity: 1;
 }
 
 .navbar-cuenta {
@@ -81,10 +462,12 @@ a {
   align-items: center;
   gap: 8px;
   font-size: 16px;
+  color: var(--color-texto-claro);
 }
 
 .navbar-cuenta .icono-usuario {
-  border: var(--grosor-borde) solid var(--color-borde);
+  border: var(--grosor-borde) solid var(--color-acento);
+  color: var(--color-acento);
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -96,13 +479,26 @@ a {
 /* ==========================================================
    PAGINA DE INICIO (index.html)
    ========================================================== */
+/* ⭐ AZUL/NEGRO: hero de la portada con fondo negro-azulado */
 .inicio-contenedor {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 60px 20px;
+  padding: 90px 20px;
+  background-color: var(--color-oscuro);
+  color: var(--color-texto-claro);
+}
+
+.inicio-contenedor .boton {
+  background-color: transparent;
+  color: var(--color-texto-claro);
+  border-color: var(--color-texto-claro);
+}
+
+.inicio-contenedor .boton:hover {
+  background-color: rgba(242, 244, 255, 0.1);
 }
 
 .inicio-nube {
@@ -116,6 +512,7 @@ a {
   font-weight: 900;
   letter-spacing: 2px;
   margin: 10px 0 30px 0;
+  color: var(--color-acento); /* ⭐ AZUL/NEGRO: titulo en azul sobre el fondo oscuro */
 }
 
 .inicio-botones {
@@ -144,10 +541,14 @@ a {
   background-color: var(--color-gris-suave);
 }
 
+/* ⭐ AZUL/NEGRO: los botones primarios ahora son azules en todo el sitio
+   (antes eran negros), para que destaquen como llamado a la accion.
+   El texto es negro (no blanco) para no salirse de la paleta azul/negro. */
 .boton-primario {
-  background-color: var(--color-texto);
-  color: var(--color-fondo);
-  border-color: var(--color-texto);
+  background-color: var(--color-acento);
+  color: var(--color-oscuro);
+  border-color: var(--color-acento);
+  font-weight: 900;
 }
 
 .boton-primario:hover {
@@ -228,7 +629,7 @@ a {
   padding: 10px 30px;
   border-top: 1px solid var(--color-gris-linea);
   font-size: 13px;
-  color: #777;
+  color: var(--color-texto-mutado);
 }
 
 /* ==========================================================
@@ -271,15 +672,18 @@ a {
   flex-shrink: 0;
 }
 
+/* ⭐ AZUL/NEGRO: item activo del menu lateral en azul */
 .menu-item.activo {
-  border: var(--grosor-borde) solid var(--color-borde);
+  border: var(--grosor-borde) solid var(--color-acento);
   border-radius: 20px;
   margin: 0 10px;
   font-weight: bold;
+  color: var(--color-acento);
 }
 
 .menu-item.activo .punto {
-  background-color: var(--color-texto);
+  background-color: var(--color-acento);
+  border-color: var(--color-acento);
 }
 
 .contenido-admin {
@@ -298,7 +702,7 @@ a {
   padding: 24px;
   text-align: center;
   margin-bottom: 24px;
-  color: #777;
+  color: var(--color-texto-mutado);
 }
 
 .fila-archivos {
@@ -365,6 +769,7 @@ a {
   max-width: 420px;
   margin: 50px auto;
   padding: 30px;
+  background-color: var(--color-gris-suave); /* ⭐ AZUL/NEGRO: panel un poco mas claro que el fondo */
   border: var(--grosor-borde) solid var(--color-borde);
   border-radius: var(--radio-borde);
 }
@@ -390,10 +795,49 @@ a {
 .campo-formulario select {
   width: 100%;
   padding: 10px;
+  background-color: var(--color-fondo); /* ⭐ AZUL/NEGRO: sin esto, el navegador pinta el campo blanco */
+  color: var(--color-texto);
   border: 1px solid var(--color-gris-linea);
   border-radius: 6px;
   font-family: var(--fuente-principal);
   font-size: 14px;
+}
+
+.campo-formulario input:focus,
+.campo-formulario textarea:focus,
+.campo-formulario select:focus {
+  outline: none;
+  border-color: var(--color-acento);
+}
+
+/* ==========================================================
+   AVISOS DE CAMPOS INVALIDOS (reemplazan el globito nativo
+   del navegador por algo con la estetica del sitio)
+   ========================================================== */
+.campo-formulario input.campo-invalido,
+.campo-formulario textarea.campo-invalido,
+.campo-formulario select.campo-invalido {
+  border-color: var(--color-error);
+}
+
+.campo-formulario input.campo-invalido:focus,
+.campo-formulario textarea.campo-invalido:focus,
+.campo-formulario select.campo-invalido:focus {
+  border-color: var(--color-error);
+}
+
+/* Apagamos el resaltado rojo que pone Chrome/Firefox por defecto
+   en los campos marcados como "required" o con "pattern" */
+.campo-formulario input:invalid,
+.campo-formulario textarea:invalid,
+.campo-formulario select:invalid {
+  box-shadow: none;
+}
+
+.error-campo {
+  color: var(--color-error);
+  font-size: 12px;
+  margin-top: 6px;
 }
 
 .formulario-contenedor .boton {
@@ -414,13 +858,13 @@ a {
 }
 
 .mensaje.exito {
-  background-color: #e6f4ea;
+  background-color: #0d2a1a; /* ⭐ AZUL/NEGRO: fondo oscuro en vez del verde claro */
   color: var(--color-exito);
   border: 1px solid var(--color-exito);
 }
 
 .mensaje.error {
-  background-color: #fce8e6;
+  background-color: #2a0f0d; /* ⭐ AZUL/NEGRO: fondo oscuro en vez del rojo claro */
   color: var(--color-error);
   border: 1px solid var(--color-error);
 }
@@ -434,6 +878,7 @@ a {
 .enlace-secundario a {
   font-weight: bold;
   text-decoration: underline;
+  color: var(--color-acento); /* ⭐ AZUL/NEGRO */
 }
 
 /* Fila con dos campos lado a lado (usado en pago.html) */
