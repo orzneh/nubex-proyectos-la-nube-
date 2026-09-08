@@ -727,6 +727,16 @@ function mostrarSeccion(nombreSeccion) {
 
   seccionActual = nombreSeccion; // recordamos que seccion quedo activa
 
+  // Ocultamos/limpiamos el mensaje general del panel (mensaje-admin).
+  // Este mensaje esta afuera de los paneles de abajo, asi que si no lo
+  // limpiamos aca, el cartel de "comentario enviado", "nombre actualizado",
+  // etc. se queda pegado en pantalla aunque cambies a otra seccion del menu.
+  const mensajeAdmin = document.getElementById("mensaje-admin");
+  if (mensajeAdmin) {
+    mensajeAdmin.textContent = "";
+    mensajeAdmin.className = "mensaje";
+  }
+
   // Ocultamos todos los paneles y despues mostramos solo el que corresponde
   [panelArchivos, panelConfiguracion, panelAyuda, panelAlmacenamiento].forEach(function (panel) {
     if (panel) panel.style.display = "none";
@@ -1119,4 +1129,34 @@ document.addEventListener("DOMContentLoaded", function () {
   inicializarPago();
   inicializarAdministrar();
   inicializarSoporte();
+});
+
+/* --------------------------------------------------------
+   10) LIMPIEZA DE MENSAJES VIEJOS AL VOLVER A LA PAGINA
+   -------------------------------------------------------- 
+   Bug: si el usuario envia el formulario (aparece el cartel de
+   "exito" o "error") y despues navega a otra pagina y vuelve para
+   atras con el boton "Atras" del navegador, el navegador NO vuelve
+   a cargar la pagina de cero: la restaura tal cual quedo desde una
+   memoria interna (bfcache). Como es una restauracion, el evento
+   "DOMContentLoaded" no se dispara de nuevo, entonces nada limpia
+   el cartel viejo y se queda pegado ahi para siempre.
+
+   El evento "pageshow" SI se dispara siempre, tanto en una carga
+   normal como en una restauracion desde bfcache, asi que lo usamos
+   para ocultar cualquier mensaje y aviso de campo que haya quedado
+   de una visita anterior. */
+window.addEventListener("pageshow", function () {
+  document.querySelectorAll(".mensaje").forEach(function (elementoMensaje) {
+    elementoMensaje.textContent = "";
+    elementoMensaje.className = "mensaje"; // le sacamos "mostrar", "exito" y "error"
+  });
+
+  document.querySelectorAll(".campo-invalido").forEach(function (campo) {
+    campo.classList.remove("campo-invalido");
+  });
+
+  document.querySelectorAll(".error-campo").forEach(function (aviso) {
+    aviso.remove();
+  });
 });
