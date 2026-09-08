@@ -1113,7 +1113,6 @@ function mostrarMensaje(elementoMensaje, texto, tipo) {
   elementoMensaje.textContent = texto;
   elementoMensaje.className = "mensaje mostrar " + tipo; // tipo = "exito" o "error"
 }
-
 /* --------------------------------------------------------
    9) PUNTO DE ENTRADA: se ejecuta cuando la pagina termina
       de cargar, y llama a las funciones de cada seccion.
