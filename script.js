@@ -417,6 +417,37 @@ function inicializarPago() {
     etiquetaPlan.textContent = planElegido;
   }
 
+  // Formateo automatico del vencimiento (MM/AA): el usuario solo escribe
+  // numeros y la barra "/" se inserta sola despues del mes, fija, sin que
+  // la pueda borrar por separado ni escribir letras u otros caracteres ahi.
+  const inputExpiracion = document.getElementById("expir_tarjeta");
+  if (inputExpiracion) {
+    inputExpiracion.addEventListener("input", function () {
+      // Nos quedamos solo con los digitos que escribio, maximo 4 (MMAA)
+      const soloNumeros = inputExpiracion.value.replace(/\D/g, "").slice(0, 4);
+
+      if (soloNumeros.length >= 3) {
+        // Ya hay mes completo (2 digitos): metemos la barra fija y seguimos con el año
+        inputExpiracion.value = soloNumeros.slice(0, 2) + "/" + soloNumeros.slice(2);
+      } else {
+        inputExpiracion.value = soloNumeros;
+      }
+    });
+
+    // Si el usuario aprieta Backspace justo despues de la barra, borramos
+    // tambien el digito del mes en el mismo golpe (asi no queda la barra
+    // "pegada" sin poder borrar el mes que tiene atras)
+    inputExpiracion.addEventListener("keydown", function (evento) {
+      const cursor = inputExpiracion.selectionStart;
+      if (evento.key === "Backspace" && inputExpiracion.value[cursor - 1] === "/") {
+        evento.preventDefault();
+        inputExpiracion.value =
+          inputExpiracion.value.slice(0, cursor - 2) + inputExpiracion.value.slice(cursor);
+        inputExpiracion.selectionStart = inputExpiracion.selectionEnd = cursor - 2;
+      }
+    });
+  }
+
   formularioPago.addEventListener("submit", function (evento) {
     evento.preventDefault();
 
