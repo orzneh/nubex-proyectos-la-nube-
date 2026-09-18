@@ -6,10 +6,16 @@
    recalcularEspacio, actualizarBarraEspacio y ESPACIO_POR_PLAN).
    ========================================================== */
 
-// Guarda cual seccion del panel "Administrar" esta activa ahora mismo
-// (recientes, cargas, papelera, configuracion, ayuda o almacenamiento).
-// Se usa para poder "refrescar" la vista actual sin saltar a otra seccion.
-let seccionActual = "recientes";
+// NOTA: "seccionActual" ya esta declarada en comun.js (que se carga
+// antes que este archivo en administrar.html) y la usan varias
+// funciones de aca abajo. Antes tambien se declaraba con "let" en este
+// mismo archivo, y como los dos scripts comparten el mismo scope global,
+// esa segunda declaracion de "let seccionActual" tiraba un
+// SyntaxError: "Identifier 'seccionActual' has already been declared".
+// Ese error rompia la carga de TODO administrar.js, por eso el resto
+// del archivo (los botones del menu: Papelera, Ayuda y comentarios,
+// Configuracion, etc) no funcionaba: ni siquiera llegaban a registrarse
+// los addEventListener.
 
 /* --------------------------------------------------------
    6) PANEL "ADMINISTRAR" - GESTOR DE ARCHIVOS (administrar.html)
