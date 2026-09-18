@@ -10,6 +10,31 @@
    5) PAGO (pago.html)
    -------------------------------------------------------- */
 
+// ⭐ NUEVO: deja el campo con SOLO letras, espacios, tildes y ñ. Cualquier
+// numero o simbolo que se escriba (o se pegue) se descarta en el momento.
+function permitirSoloLetras(input) {
+  if (!input) return;
+  input.addEventListener("input", function () {
+    const valorLimpio = input.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
+    if (valorLimpio !== input.value) {
+      input.value = valorLimpio;
+    }
+  });
+}
+
+// ⭐ NUEVO: deja el campo con SOLO digitos (0-9), hasta un maximo de
+// caracteres. Cualquier letra o simbolo que se escriba (o se pegue) se
+// descarta en el momento.
+function permitirSoloNumeros(input, maximoDigitos) {
+  if (!input) return;
+  input.addEventListener("input", function () {
+    const valorLimpio = input.value.replace(/\D/g, "").slice(0, maximoDigitos);
+    if (valorLimpio !== input.value) {
+      input.value = valorLimpio;
+    }
+  });
+}
+
 function inicializarPago() {
   const formularioPago = document.getElementById("form-pago");
   if (!formularioPago) return;
@@ -26,20 +51,72 @@ function inicializarPago() {
     etiquetaPlan.textContent = planElegido;
   }
 
-  // Formateo automatico del vencimiento (MM/AA): el usuario solo escribe
-  // numeros y la barra "/" se inserta sola despues del mes, fija, sin que
-  // la pueda borrar por separado ni escribir letras u otros caracteres ahi.
+  // ⭐ NUEVO: solo dejamos escribir letras (y espacios, tildes, ñ) en los
+  // campos que son de texto libre pero NO deberian aceptar numeros ni
+  // simbolos: nombre del titular, pais y provincia.
+  permitirSoloLetras(document.getElementById("nombre_suscriptor"));
+  permitirSoloLetras(document.getElementById("pais"));
+  permitirSoloLetras(document.getElementById("provincia"));
+
+  // ⭐ NUEVO: el numero de tarjeta y el CVV solo aceptan digitos mientras
+  // se escribe (antes se podian escribir letras y recien se avisaba al
+  // enviar el formulario).
+  permitirSoloNumeros(document.getElementById("num_tarjeta"), 16);
+  permitirSoloNumeros(document.getElementById("cvv_tarjeta"), 3);
+
+  // direc_user y direc2_user quedan como texto libre a proposito: una
+  // direccion puede tener numeros, letras y simbolos (calle, altura,
+  // piso, depto, etc), asi que no se les aplica ningun filtro.
+
+  // Formateo y validacion en tiempo real del vencimiento (MM/AA): el
+  // usuario solo puede escribir numeros, y ademas el campo NO deja
+  // pasar meses que no existen (solo 01 a 12). Si escribe un mes de
+  // un solo digito mayor a 1 (ej: "7"), se autocompleta como "07".
   const inputExpiracion = document.getElementById("expir_tarjeta");
   if (inputExpiracion) {
     inputExpiracion.addEventListener("input", function () {
-      // Nos quedamos solo con los digitos que escribio, maximo 4 (MMAA)
-      const soloNumeros = inputExpiracion.value.replace(/\D/g, "").slice(0, 4);
+      const numerosEscritos = inputExpiracion.value.replace(/\D/g, "");
 
-      if (soloNumeros.length >= 3) {
+      // Vamos construyendo el valor digito por digito, sin dejar pasar
+      // ningun mes invalido, hasta un maximo de 4 digitos (MM + AA)
+      let digitosLimpios = "";
+
+      for (let i = 0; i < numerosEscritos.length && digitosLimpios.length < 4; i++) {
+        const digito = numerosEscritos[i];
+
+        if (digitosLimpios.length === 0) {
+          // Primer digito del mes
+          if (digito === "0" || digito === "1") {
+            digitosLimpios += digito;
+          } else {
+            // Meses de un solo digito (2 al 9): los autocompletamos con
+            // un 0 adelante (ej: escribe "7" y queda "07")
+            digitosLimpios += "0" + digito;
+          }
+        } else if (digitosLimpios.length === 1) {
+          const primerDigitoMes = digitosLimpios[0];
+          if (primerDigitoMes === "0") {
+            // Mes 01-09: el segundo digito no puede ser 0 (no existe el mes 00)
+            if (digito !== "0") {
+              digitosLimpios += digito;
+            }
+          } else {
+            // primerDigitoMes === "1": solo existen los meses 10, 11 y 12
+            if (digito === "0" || digito === "1" || digito === "2") {
+              digitosLimpios += digito;
+            }
+          }
+        } else {
+          // Los dos digitos del año: cualquier numero del 0 al 9 es valido aca
+          digitosLimpios += digito;
+        }
+      }
+
+      if (digitosLimpios.length >= 3) {
         // Ya hay mes completo (2 digitos): metemos la barra fija y seguimos con el año
-        inputExpiracion.value = soloNumeros.slice(0, 2) + "/" + soloNumeros.slice(2);
+        inputExpiracion.value = digitosLimpios.slice(0, 2) + "/" + digitosLimpios.slice(2);
       } else {
-        inputExpiracion.value = soloNumeros;
+        inputExpiracion.value = digitosLimpios;
       }
     });
 
@@ -104,6 +181,25 @@ function inicializarPago() {
     } else if (!/^(0[1-9]|1[0-2])\/[0-9]{2}$/.test(expir_tarjeta)) {
       marcarCampoInvalido(inputExpiracion, "Usá el formato MM/AA.");
       formularioValido = false;
+    } else {
+      // ⭐ NUEVO: aunque el formato MM/AA este bien escrito, chequeamos
+      // que sea una fecha que tenga sentido: ni una tarjeta ya vencida,
+      // ni un año demasiado lejano en el futuro.
+      const partesVencimiento = expir_tarjeta.split("/");
+      const mesTarjeta = parseInt(partesVencimiento[0], 10);
+      const anioTarjeta = 2000 + parseInt(partesVencimiento[1], 10);
+
+      const fechaActual = new Date();
+      const anioActual = fechaActual.getFullYear();
+      const mesActual = fechaActual.getMonth() + 1;
+
+      if (anioTarjeta < anioActual || (anioTarjeta === anioActual && mesTarjeta < mesActual)) {
+        marcarCampoInvalido(inputExpiracion, "La tarjeta está vencida.");
+        formularioValido = false;
+      } else if (anioTarjeta > anioActual + 20) {
+        marcarCampoInvalido(inputExpiracion, "El año de vencimiento no es válido.");
+        formularioValido = false;
+      }
     }
 
     if (cvv_tarjeta === "") {
