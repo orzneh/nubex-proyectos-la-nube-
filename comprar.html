@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NUBEX - Comprar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
@@ -19,7 +23,7 @@
       <a href="acerca.html">Acerca</a>
     </div>
     <a href="login.html" class="navbar-cuenta">
-      <span class="icono-usuario">👤</span> Cuenta
+      <span class="icono-usuario">👤</span> <span class="etiqueta-cuenta">Cuenta</span>
     </a>
   </div>
 
@@ -36,7 +40,7 @@
         <li>Libre de anuncios</li>
       </ul>
       <div class="plan-precio">$10/mes &nbsp;•&nbsp; $90/año</div>
-      <button class="boton boton-primario boton-elegir-plan" data-plan="Plan Normal" style="margin-top:16px;">
+      <button class="boton boton-primario boton-elegir-plan plan-elegir" data-plan="Plan Normal">
         Elegir plan
       </button>
     </div>
@@ -50,7 +54,7 @@
         <li>Libre de anuncios</li>
       </ul>
       <div class="plan-precio">$25/mes &nbsp;•&nbsp; $190/año</div>
-      <button class="boton boton-primario boton-elegir-plan" data-plan="Plan Premium" style="margin-top:16px;">
+      <button class="boton boton-primario boton-elegir-plan plan-elegir" data-plan="Plan Premium">
         Elegir plan
       </button>
     </div>
@@ -64,7 +68,7 @@
         <li>Con anuncios</li>
       </ul>
       <div class="plan-precio">Gratis</div>
-      <button class="boton boton-elegir-plan" data-plan="Plan Gratuito" style="margin-top:16px;">
+      <button class="boton boton-elegir-plan plan-elegir" data-plan="Plan Gratuito">
         Elegir plan
       </button>
     </div>
@@ -77,3 +81,4 @@
   <script src="comprar.js"></script>
 </body>
 </html>
+
