@@ -43,6 +43,7 @@
     }
 
     init() {
+      if (!Nubex.exigirSesion()) return;
       if (!this.contenedorArchivos) return; // esta pagina no es administrar.html
 
       // El nombre en la navbar ("Cuenta" -> nombre del cliente) y el href
