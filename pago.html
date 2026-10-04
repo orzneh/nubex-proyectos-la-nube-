@@ -2,10 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NUBEX - Pago</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+
   <div class="navbar">
     <a href="index.html" class="navbar-logo">
       <span class="icono-nube">☁️</span> NUBEX
@@ -17,13 +22,13 @@
       <a href="acerca.html">Acerca</a>
     </div>
     <a href="login.html" class="navbar-cuenta">
-      <span class="icono-usuario">👤</span> Cuenta
+      <span class="icono-usuario">👤</span> <span class="etiqueta-cuenta">Cuenta</span>
     </a>
   </div>
 
   <div class="formulario-contenedor">
     <h1>Finalizar compra</h1>
-    <p style="text-align:center; margin-top:-10px;">
+    <p class="subtitulo">
       Estas suscribiendo al <strong id="etiqueta-plan-elegido">...</strong>
     </p>
 
@@ -114,4 +119,3 @@
   <script src="pago.js"></script>
 </body>
 </html>
-
