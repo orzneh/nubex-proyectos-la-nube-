@@ -1,96 +1,285 @@
 /* ==========================================================
    ESTILOS.CSS - Hoja de estilos de NUBEX
    ==========================================================
-   Esta es la UNICA hoja de estilos, la usan todas las paginas.
-   Arriba de todo estan las VARIABLES DE COLOR: si querés
-   cambiar el color de fondo, de los bordes o de los botones
-   de TODO el sitio, solo tenés que cambiar los valores aca. */
-
-/* ==========================================================
-   ⭐⭐⭐ CAMBIOS NUEVOS (todo el sitio en azul y negro, sin blanco)
-   ==========================================================
-   Antes solo algunas secciones (navbar, hero, franja de planes,
-   pie de página) tenían fondo oscuro; el resto del sitio seguía
-   siendo blanco (tarjetas, formularios, panel de Administrar).
-
-   Ahora --color-fondo (la variable que define el fondo general
-   de TODAS las páginas) pasó de blanco a el mismo negro-azulado
-   que ya usaban esas secciones, así que se propaga solo a todo
-   el sitio: portada, comprar, administrar, login, registro, pago,
-   soporte y acerca.
-
-   Además:
-   - --color-borde ahora es azul (antes era casi negro), así que
-     todos los bordes tipo "boceto" (botones, tarjetas de planes,
-     tarjetas de archivos, el formulario) quedaron en azul.
-   - Los textos grises (#666/#777/#999) se reemplazaron por
-     --color-texto-mutado, un celeste apagado que se lee bien
-     sobre el fondo oscuro.
-   - Los campos de formulario (input/textarea/select) ahora tienen
-     fondo oscuro explícito, porque si no el navegador los pinta
-     blancos por defecto.
-   - El texto del botón primario es negro (no blanco) sobre fondo
-     azul, para no salirse de la paleta.
-   - Los mensajes de éxito/error ya no tienen fondo claro: ahora
-     son oscuros con el borde y el texto en verde/rojo.
+   Hoja unica, la usan todas las paginas del sitio.
+   Variables de color y tipografia arriba de todo en :root;
+   para cambiar la paleta de TODO el sitio alcanza con tocar
+   ahi.
    ========================================================== */
 
+:root {
+  /* --- Paleta de colores --- */
+  --color-fondo: #05070f;             /* Fondo general de las paginas */
+  --color-texto: #cfe0ff;             /* Texto principal */
+  --color-borde: var(--color-acento); /* Bordes tipo "boceto" */
+  --color-gris-suave: #0b0e1c;        /* Panel/franja un poco mas clara que el fondo */
+  --color-gris-linea: #232a45;        /* Lineas divisorias */
+  --color-acento: #2e8eff;            /* Azul principal ("azure tech") */
+  --color-acento-suave: #5ba6ff;      /* Variante del acento para hovers/gradientes */
+  --color-texto-mutado: #8b96c2;      /* Texto secundario */
+  --color-exito: #2ecc71;
+  --color-error: #ff5c4d;
+
+  /* Alias historicos, se mantienen para no romper nada que los use */
+  --color-oscuro: #05070f;
+  --color-texto-claro: #cfe0ff;
+
+  /* --- Tipografia ---
+     "Inter" es una tipografia pensada para pantalla; si por algun
+     motivo no llega a cargar (sin internet, bloqueada, etc.) cae
+     prolijamente en la fuente del sistema. */
+  --fuente-principal: "Inter", "Segoe UI", system-ui, Arial, sans-serif;
+
+  /* --- Bordes y espaciados reutilizables --- */
+  --radio-borde: 12px;
+  --radio-borde-chico: 8px;
+  --grosor-borde: 2px;
+
+  /* --- Sombras y transiciones (nuevo: le dan profundidad y vida
+     a tarjetas/botones sin cambiar la paleta ni el layout) --- */
+  --sombra-suave: 0 4px 16px rgba(0, 10, 40, 0.35);
+  --sombra-acento: 0 6px 20px rgba(46, 142, 255, 0.25);
+  --transicion-rapida: 150ms ease;
+  --transicion-suave: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* ==========================================================
-   ⭐⭐ CAMBIOS NUEVOS (tema azul y negro para todo el sitio)
-   ==========================================================
-   Le di una paleta azul/negro mas llamativa a TODO el sitio
-   (no solo a index.html), porque todas las paginas comparten
-   este mismo archivo de estilos. Los cambios fueron:
-
-   1) Variables de color en :root:
-      - --color-acento pasó de un celeste suave (#2f80ed) a un
-        azul mas fuerte y saturado (#0047FF).
-      - Se agregaron --color-oscuro (#05070f, casi negro con
-        tinte azul) y --color-texto-claro (para texto legible
-        arriba de fondos oscuros).
-      Como el resto del sitio ya usaba estas variables en
-      bordes, botones y barras, el cambio se propaga solo a
-      todas las paginas.
-
-   2) Secciones puntuales que pasé a fondo oscuro (negro) con
-      detalles en azul, para que el contraste sea mas fuerte:
-      - .navbar (la barra de arriba, en TODAS las paginas)
-      - .inicio-contenedor (el "hero" de la portada)
-      - .franja-planes y .cta-final (en la landing)
-      - .pie-pagina-landing (el pie de página nuevo)
-
-   3) Los botones primarios (.boton-primario) ahora son azules
-      en vez de negros, para que resalten como llamado a la
-      accion en todo el sitio (comprar, pagar, crear cuenta, etc).
-
-   Cada cambio puntual está marcado en el lugar donde ocurre
-   con un comentario "⭐ AZUL/NEGRO".
+   RESET Y BASE
    ========================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente-principal);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Un solo estilo de foco, consistente en todo el sitio, visible
+   solo cuando se navega con teclado (no al hacer click con mouse) */
+:focus-visible {
+  outline: 2px solid var(--color-acento-suave);
+  outline-offset: 2px;
+}
 
 /* ==========================================================
-   ⭐ CAMBIOS NUEVOS (landing page de index.html)
-   ==========================================================
-   Todo lo que sigue en este bloque son clases NUEVAS que
-   agregué para convertir index.html en una landing page
-   completa (antes solo tenía la nube, el título y 4 botones).
-   Reutilizan las mismas variables de color y el mismo estilo
-   "boceto" (bordes finos, esquinas redondeadas) que ya tenía
-   el resto del sitio, no inventé una paleta nueva.
-
-   Secciones que se agregaron a index.html:
-   1) .franja-confianza      -> mini estadísticas debajo del hero
-   2) .seccion-landing       -> contenedor genérico con título + bajada
-   3) .pasos-contenedor      -> "Cómo funciona" en 3 pasos numerados
-   4) .beneficios-contenedor -> 3 tarjetas (Guardar / Ordenar / Compartir)
-   5) .franja-planes         -> resumen chico de los 3 planes + botón
-   6) .cta-final             -> franja de cierre con llamado a la acción
-   7) .pie-pagina-landing    -> pie de página con columnas de links
+   BOTONES Y TARJETAS (estilo "boceto": bordes finos redondeados)
    ========================================================== */
+.boton {
+  border: var(--grosor-borde) solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  padding: 14px 26px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: var(--fuente-principal);
+  transition: background-color var(--transicion-rapida), transform var(--transicion-rapida), box-shadow var(--transicion-rapida);
+}
 
+.boton:hover {
+  background-color: var(--color-gris-suave);
+  transform: translateY(-1px);
+}
+
+.boton:active {
+  transform: translateY(0);
+}
+
+.boton-primario {
+  background-color: var(--color-acento);
+  color: var(--color-oscuro);
+  border-color: var(--color-acento);
+  font-weight: 900;
+  box-shadow: var(--sombra-acento);
+}
+
+.boton-primario:hover {
+  background-color: var(--color-acento-suave);
+  border-color: var(--color-acento-suave);
+}
+
+.boton-chico {
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: var(--radio-borde-chico);
+}
+
+.boton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================================
+   BARRA DE NAVEGACION SUPERIOR
+   ========================================================== */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 32px;
+  background-color: var(--color-oscuro);
+  color: var(--color-texto-claro);
+  border-bottom: var(--grosor-borde) solid var(--color-acento);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--color-texto-claro);
+}
+
+.navbar-logo .icono-nube {
+  font-size: 26px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 32px;
+  font-size: 16px;
+}
+
+.navbar-links a {
+  color: var(--color-texto-claro);
+  opacity: 0.75;
+  position: relative;
+  padding-bottom: 2px;
+  transition: opacity var(--transicion-rapida);
+}
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 2px;
+  background-color: var(--color-acento);
+  transition: right var(--transicion-suave);
+}
+
+.navbar-links a:hover {
+  opacity: 1;
+}
+
+.navbar-links a:hover::after {
+  right: 0;
+}
+
+.navbar-links a.activo {
+  font-weight: bold;
+  color: var(--color-acento);
+  opacity: 1;
+}
+
+.navbar-links a.activo::after {
+  right: 0;
+}
+
+.navbar-cuenta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: var(--color-texto-claro);
+  transition: opacity var(--transicion-rapida);
+}
+
+.navbar-cuenta:hover {
+  opacity: 0.85;
+}
+
+.navbar-cuenta .icono-usuario {
+  border: var(--grosor-borde) solid var(--color-acento);
+  color: var(--color-acento);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================
+   PAGINA DE INICIO (index.html) - hero
+   ========================================================== */
+.inicio-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 76px 20px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(46, 142, 255, 0.16), transparent 60%),
+    var(--color-oscuro);
+  color: var(--color-texto-claro);
+}
+
+.inicio-contenedor .boton {
+  background-color: transparent;
+  color: var(--color-texto-claro);
+  border-color: var(--color-texto-claro);
+}
+
+.inicio-contenedor .boton:hover {
+  background-color: rgba(242, 244, 255, 0.1);
+}
+
+.inicio-nube {
+  font-size: 88px;
+  line-height: 1;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 10px 30px rgba(46, 142, 255, 0.35));
+}
+
+.inicio-titulo {
+  font-size: clamp(36px, 7vw, 54px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin: 8px 0 26px 0;
+  color: var(--color-acento);
+}
+
+.inicio-botones {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ==========================================================
+   LANDING PAGE (index.html) - secciones debajo del hero
+   ========================================================== */
 .franja-confianza {
   display: flex;
   justify-content: center;
-  align-items: center;   /* centra verticalmente los items entre sí */
+  align-items: center;
   gap: 60px;
   flex-wrap: wrap;
   width: 100%;
@@ -102,7 +291,7 @@
 .franja-confianza .dato {
   display: flex;
   flex-direction: column;
-  align-items: center;   /* centra número y etiqueta dentro de cada dato */
+  align-items: center;
 }
 
 .franja-confianza .dato-numero {
@@ -123,6 +312,11 @@
   border-top: 1px solid var(--color-gris-linea);
 }
 
+.seccion-landing-sin-borde {
+  border-top: none;
+  padding-top: 0;
+}
+
 .seccion-landing-titulo {
   text-align: center;
   margin-bottom: 46px;
@@ -138,7 +332,6 @@
   margin: 0;
 }
 
-/* --- Cómo funciona: pasos numerados (es una secuencia real, 1-2-3) --- */
 .pasos-contenedor {
   display: flex;
   gap: 30px;
@@ -152,7 +345,6 @@
   text-align: center;
 }
 
-/* ⭐ AZUL/NEGRO: circulo de cada paso en azul llamativo */
 .paso-numero {
   width: 44px;
   height: 44px;
@@ -179,20 +371,22 @@
   margin: 0;
 }
 
-/* --- Beneficios: 3 tarjetas parejas --- */
 .beneficios-contenedor {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 24px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .beneficio-tarjeta {
-  flex: 1;
-  min-width: 230px;
   border: var(--grosor-borde) solid var(--color-borde);
   border-radius: var(--radio-borde);
   padding: 26px;
+  transition: transform var(--transicion-suave), box-shadow var(--transicion-suave);
+}
+
+.beneficio-tarjeta:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-suave);
 }
 
 .beneficio-tarjeta .beneficio-icono {
@@ -212,8 +406,6 @@
   margin: 0;
 }
 
-/* --- Franja de planes: version resumida de comprar.html ---
-   ⭐ AZUL/NEGRO: fondo oscuro para que contraste con el resto */
 .franja-planes {
   background-color: var(--color-oscuro);
   color: var(--color-texto-claro);
@@ -242,12 +434,18 @@
   padding: 22px;
   text-align: center;
   color: var(--color-texto-claro);
+  transition: transform var(--transicion-suave), border-color var(--transicion-suave);
+}
+
+.plan-mini:hover {
+  transform: translateY(-4px);
 }
 
 .plan-mini.destacado {
   border-color: var(--color-acento);
   border-width: 3px;
   background-color: #0b1130;
+  box-shadow: var(--sombra-acento);
 }
 
 .plan-mini h3 {
@@ -258,7 +456,7 @@
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 10px;
-  color: var(--color-acento); /* ⭐ AZUL/NEGRO */
+  color: var(--color-acento);
 }
 
 .plan-mini .plan-mini-detalle {
@@ -272,12 +470,12 @@
   margin-top: 34px;
 }
 
-/* --- Cierre con llamado a la accion ---
-   ⭐ AZUL/NEGRO: fondo negro, titulo en azul */
 .cta-final {
   text-align: center;
   padding: 90px 24px;
-  background-color: var(--color-oscuro);
+  background:
+    radial-gradient(circle at 50% 100%, rgba(46, 142, 255, 0.18), transparent 60%),
+    var(--color-oscuro);
   color: var(--color-texto-claro);
 }
 
@@ -292,8 +490,6 @@
   margin: 0 0 28px 0;
 }
 
-/* --- Pie de pagina de la landing (mas completo que .pie-pagina) ---
-   ⭐ AZUL/NEGRO: pie de pagina oscuro, en linea con navbar y hero */
 .pie-pagina-landing {
   background-color: var(--color-oscuro);
   color: var(--color-texto-claro);
@@ -339,6 +535,7 @@
   font-size: 13px;
   color: var(--color-texto-mutado);
   margin-bottom: 8px;
+  transition: color var(--transicion-rapida);
 }
 
 .pie-pagina-landing-links a:hover {
@@ -354,215 +551,62 @@
   color: var(--color-texto-mutado);
 }
 
-@media (max-width: 700px) {
-  .pasos-contenedor,
-  .beneficios-contenedor {
-    flex-direction: column;
-  }
-}
-/* ================== FIN DE CAMBIOS NUEVOS ================== */
-
-:root {
-  /* --- Paleta de colores (variables CSS) ---
-     ⭐⭐ AZUL/NEGRO TOTAL: ahora TODO el sitio usa esta misma paleta
-     de azul y negro. --color-fondo ya no es blanco, es el mismo
-     negro-azulado que antes solo usaban la navbar y el hero, asi
-     que se propaga automáticamente a cada página y cada componente
-     que use estas variables. */
-  --color-fondo: #05070f;          /* Fondo general de las paginas (antes blanco) */
-  --color-texto: #cfe0ff;          /* Texto principal, celeste claro (antes casi negro) */
-  --color-borde: var(--color-acento); /* Bordes tipo "boceto", ahora en azul (antes negro) */
-  --color-gris-suave: #0b0e1c;     /* Panel/franja un poco mas clara que el fondo, sigue siendo oscura */
-  --color-gris-linea: #232a45;     /* Lineas divisorias, azul oscuro visible sobre el fondo negro */
-  --color-acento: #0047ff;         /* Azul fuerte y llamativo */
-  --color-texto-mutado: #8b96c2;   /* Texto secundario/gris claro con tinte azul (reemplaza los grises #666/#777/#999) */
-  --color-exito: #2ecc71;          /* Verde para mensajes de exito (aclarado para verse sobre fondo oscuro) */
-  --color-error: #ff5c4d;          /* Rojo para mensajes de error (aclarado para verse sobre fondo oscuro) */
-
-  /* Fondo oscuro y texto claro reutilizados en secciones puntuales
-     (ahora son iguales al fondo general, pero se dejan las
-     variables para no romper nada que las referencie) */
-  --color-oscuro: #05070f;
-  --color-texto-claro: #cfe0ff;
-
-  /* --- Tipografia --- */
-  --fuente-principal: 'Segoe UI', Arial, sans-serif;
-
-  /* --- Bordes y espaciados reutilizables --- */
-  --radio-borde: 10px;
-  --grosor-borde: 2px;
-}
-
-/* Reset simple: hace que padding y border no sumen al tamaño total */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: var(--fuente-principal);
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 /* ==========================================================
-   BARRA DE NAVEGACION SUPERIOR (se repite en varias paginas)
+   PREGUNTAS FRECUENTES (index.html) - usa <details>/<summary>
+   nativos del HTML, no necesita JavaScript.
    ========================================================== */
-/* ⭐ AZUL/NEGRO: la navbar ahora es de fondo negro-azulado en TODAS
-   las paginas, con el texto en claro y el link activo en azul */
-.navbar {
+.faq-contenedor {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.faq-item {
+  border: var(--grosor-borde) solid var(--color-gris-linea);
+  border-radius: var(--radio-borde);
+  padding: 4px 20px;
+  transition: border-color var(--transicion-rapida);
+}
+
+.faq-item[open],
+.faq-item:hover {
+  border-color: var(--color-acento);
+}
+
+.faq-item summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 32px;
-  background-color: var(--color-oscuro);
-  color: var(--color-texto-claro);
-  border-bottom: var(--grosor-borde) solid var(--color-acento);
-}
-
-.navbar-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 22px;
-  font-weight: bold;
-  color: var(--color-texto-claro);
-}
-
-.navbar-logo .icono-nube {
-  font-size: 26px;
-}
-
-.navbar-links {
-  display: flex;
-  gap: 32px;
-  font-size: 16px;
-}
-
-.navbar-links a {
-  color: var(--color-texto-claro);
-  opacity: 0.75;
-}
-
-.navbar-links a:hover {
-  opacity: 1;
-}
-
-.navbar-links a.activo {
-  font-weight: bold;
-  text-decoration: underline;
-  text-decoration-color: var(--color-acento);
-  color: var(--color-acento);
-  opacity: 1;
-}
-
-.navbar-cuenta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  color: var(--color-texto-claro);
-}
-
-.navbar-cuenta .icono-usuario {
-  border: var(--grosor-borde) solid var(--color-acento);
-  color: var(--color-acento);
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ==========================================================
-   PAGINA DE INICIO (index.html)
-   ========================================================== */
-/* ⭐ AZUL/NEGRO: hero de la portada con fondo negro-azulado */
-.inicio-contenedor {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 90px 20px;
-  background-color: var(--color-oscuro);
-  color: var(--color-texto-claro);
-}
-
-.inicio-contenedor .boton {
-  background-color: transparent;
-  color: var(--color-texto-claro);
-  border-color: var(--color-texto-claro);
-}
-
-.inicio-contenedor .boton:hover {
-  background-color: rgba(242, 244, 255, 0.1);
-}
-
-.inicio-nube {
-  font-size: 110px;
-  line-height: 1;
-  margin-bottom: 10px;
-}
-
-.inicio-titulo {
-  font-size: 64px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  margin: 10px 0 30px 0;
-  color: var(--color-acento); /* ⭐ AZUL/NEGRO: titulo en azul sobre el fondo oscuro */
-}
-
-.inicio-botones {
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* ==========================================================
-   BOTONES Y TARJETAS (estilo "boceto": bordes redondeados finos)
-   ========================================================== */
-.boton {
-  border: var(--grosor-borde) solid var(--color-borde);
-  border-radius: var(--radio-borde);
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  padding: 14px 26px;
-  font-size: 16px;
-  font-weight: bold;
+  gap: 12px;
+  padding: 16px 0;
   cursor: pointer;
-  font-family: var(--fuente-principal);
+  font-weight: bold;
+  list-style: none; /* oculta el triangulo nativo del navegador */
 }
 
-.boton:hover {
-  background-color: var(--color-gris-suave);
+.faq-item summary::-webkit-details-marker {
+  display: none; /* oculta el triangulo nativo en navegadores webkit */
 }
 
-/* ⭐ AZUL/NEGRO: los botones primarios ahora son azules en todo el sitio
-   (antes eran negros), para que destaquen como llamado a la accion.
-   El texto es negro (no blanco) para no salirse de la paleta azul/negro. */
-.boton-primario {
-  background-color: var(--color-acento);
-  color: var(--color-oscuro);
-  border-color: var(--color-acento);
-  font-weight: 900;
+.faq-flecha {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-acento);
+  transition: transform var(--transicion-suave);
 }
 
-.boton-primario:hover {
-  opacity: 0.85;
+.faq-item[open] .faq-flecha {
+  transform: rotate(180deg);
 }
 
-.boton-chico {
-  padding: 8px 14px;
-  font-size: 13px;
-  border-radius: 6px;
+.faq-item p {
+  margin: 0 0 18px 0;
+  color: var(--color-texto-mutado);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* ==========================================================
@@ -583,6 +627,12 @@ a {
   padding: 26px;
   display: flex;
   flex-direction: column;
+  transition: transform var(--transicion-suave), box-shadow var(--transicion-suave);
+}
+
+.plan-tarjeta:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-suave);
 }
 
 .plan-tarjeta h2 {
@@ -615,6 +665,10 @@ a {
   left: 0;
 }
 
+.plan-tarjeta .plan-elegir {
+  margin-top: 16px;
+}
+
 .plan-precio {
   text-align: center;
   font-weight: bold;
@@ -645,6 +699,7 @@ a {
 
 .menu-lateral {
   width: 250px;
+  flex-shrink: 0;
   border-right: var(--grosor-borde) solid var(--color-gris-linea);
   padding: 20px 0;
   min-height: 80vh;
@@ -666,6 +721,11 @@ a {
   padding: 12px 20px;
   cursor: pointer;
   font-size: 15px;
+  transition: color var(--transicion-rapida);
+}
+
+.menu-item:hover {
+  color: var(--color-acento);
 }
 
 .menu-item .punto {
@@ -674,9 +734,9 @@ a {
   border: var(--grosor-borde) solid var(--color-borde);
   border-radius: 50%;
   flex-shrink: 0;
+  transition: background-color var(--transicion-rapida), border-color var(--transicion-rapida);
 }
 
-/* ⭐ AZUL/NEGRO: item activo del menu lateral en azul */
 .menu-item.activo {
   border: var(--grosor-borde) solid var(--color-acento);
   border-radius: 20px;
@@ -693,6 +753,7 @@ a {
 .contenido-admin {
   flex-grow: 1;
   padding: 30px 40px;
+  min-width: 0; /* evita que el contenido empuje el layout en pantallas chicas */
 }
 
 .contenido-admin h1 {
@@ -701,27 +762,40 @@ a {
 }
 
 .zona-subida {
+  display: block;
   border: 2px dashed var(--color-gris-linea);
   border-radius: var(--radio-borde);
   padding: 24px;
   text-align: center;
   margin-bottom: 24px;
   color: var(--color-texto-mutado);
+  cursor: pointer;
+  transition: border-color var(--transicion-rapida), color var(--transicion-rapida);
+}
+
+.zona-subida:hover {
+  border-color: var(--color-acento);
+  color: var(--color-texto);
 }
 
 .fila-archivos {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 24px;
 }
 
 .archivo-tarjeta {
-  width: 150px;
   border: var(--grosor-borde) solid var(--color-borde);
   border-radius: var(--radio-borde);
   padding: 14px;
   text-align: center;
   position: relative;
+  transition: transform var(--transicion-suave), box-shadow var(--transicion-suave);
+}
+
+.archivo-tarjeta:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-suave);
 }
 
 .archivo-tarjeta .archivo-icono {
@@ -743,11 +817,22 @@ a {
   white-space: nowrap;
 }
 
+.archivo-tarjeta .archivo-tamano {
+  font-size: 11px;
+  color: var(--color-texto-mutado);
+  margin-top: 2px;
+}
+
 .archivo-acciones {
   display: flex;
   justify-content: center;
   gap: 6px;
   margin-top: 8px;
+}
+
+.sin-archivos {
+  color: var(--color-texto-mutado);
+  font-size: 14px;
 }
 
 .barra-espacio-contenedor {
@@ -764,6 +849,126 @@ a {
 .barra-espacio-relleno {
   background-color: var(--color-acento);
   height: 100%;
+  transition: width var(--transicion-suave);
+}
+
+.texto-ayuda-panel {
+  font-size: 13px;
+  color: var(--color-texto-mutado);
+  margin-top: 0;
+}
+
+.separador-panel {
+  margin: 26px 0;
+  border: none;
+  border-top: 1px solid var(--color-gris-linea);
+}
+
+.comentario-tarjeta {
+  border: var(--grosor-borde) solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  padding: 14px 16px;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.comentario-fecha {
+  font-size: 12px;
+  color: var(--color-texto-mutado);
+  margin-bottom: 6px;
+}
+
+.resumen-almacenamiento p {
+  margin: 0 0 10px 0;
+}
+
+/* ==========================================================
+   PERFIL (seccion Configuracion del panel de Administrar)
+   ========================================================== */
+.panel-subseccion {
+  background-color: var(--color-gris-suave);
+  border: 1px solid var(--color-gris-linea);
+  border-radius: var(--radio-borde);
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.panel-subseccion h3 {
+  margin: 0 0 18px 0;
+  font-size: 15px;
+}
+
+.perfil-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.perfil-avatar-grande {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border: var(--grosor-borde) solid var(--color-acento);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  background: rgba(46, 142, 255, 0.08);
+}
+
+.perfil-cabecera-texto p {
+  margin: 0;
+  color: var(--color-texto-mutado);
+  font-size: 13px;
+}
+
+.selector-avatares {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.avatar-opcion {
+  width: 42px;
+  height: 42px;
+  border: var(--grosor-borde) solid var(--color-gris-linea);
+  border-radius: 50%;
+  background: transparent;
+  font-size: 19px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transicion-rapida), transform var(--transicion-rapida);
+}
+
+.avatar-opcion:hover {
+  transform: translateY(-2px);
+}
+
+.avatar-opcion.seleccionado {
+  border-color: var(--color-acento);
+  background: rgba(46, 142, 255, 0.12);
+}
+
+.campo-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-gris-linea);
+  font-size: 14px;
+}
+
+.campo-info:last-child {
+  border-bottom: none;
+}
+
+.campo-info .etiqueta {
+  color: var(--color-texto-mutado);
 }
 
 /* ==========================================================
@@ -773,14 +978,54 @@ a {
   max-width: 420px;
   margin: 50px auto;
   padding: 30px;
-  background-color: var(--color-gris-suave); /* ⭐ AZUL/NEGRO: panel un poco mas claro que el fondo */
+  background-color: var(--color-gris-suave);
   border: var(--grosor-borde) solid var(--color-borde);
   border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-suave);
 }
 
 .formulario-contenedor h1 {
   text-align: center;
   margin-top: 0;
+}
+
+.icono-circular {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px auto;
+  border: var(--grosor-borde) solid var(--color-acento);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  background: rgba(46, 142, 255, 0.08);
+}
+
+.enlace-alternar {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--color-acento);
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 0 0 0;
+  font-family: var(--fuente-principal);
+}
+
+.enlace-alternar:hover {
+  color: var(--color-acento-suave);
+}
+
+.formulario-contenedor .subtitulo {
+  text-align: center;
+  margin-top: -10px;
+  color: var(--color-texto-mutado);
+  font-size: 14px;
 }
 
 .campo-formulario {
@@ -799,12 +1044,13 @@ a {
 .campo-formulario select {
   width: 100%;
   padding: 10px;
-  background-color: var(--color-fondo); /* ⭐ AZUL/NEGRO: sin esto, el navegador pinta el campo blanco */
+  background-color: var(--color-fondo);
   color: var(--color-texto);
   border: 1px solid var(--color-gris-linea);
-  border-radius: 6px;
+  border-radius: var(--radio-borde-chico);
   font-family: var(--fuente-principal);
   font-size: 14px;
+  transition: border-color var(--transicion-rapida), box-shadow var(--transicion-rapida);
 }
 
 .campo-formulario input:focus,
@@ -812,6 +1058,7 @@ a {
 .campo-formulario select:focus {
   outline: none;
   border-color: var(--color-acento);
+  box-shadow: 0 0 0 3px rgba(46, 142, 255, 0.2);
 }
 
 /* ==========================================================
@@ -828,10 +1075,9 @@ a {
 .campo-formulario textarea.campo-invalido:focus,
 .campo-formulario select.campo-invalido:focus {
   border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(255, 92, 77, 0.2);
 }
 
-/* Apagamos el resaltado rojo que pone Chrome/Firefox por defecto
-   en los campos marcados como "required" o con "pattern" */
 .campo-formulario input:invalid,
 .campo-formulario textarea:invalid,
 .campo-formulario select:invalid {
@@ -851,10 +1097,10 @@ a {
 
 .mensaje {
   padding: 10px 14px;
-  border-radius: 6px;
+  border-radius: var(--radio-borde-chico);
   font-size: 14px;
   margin-bottom: 16px;
-  display: none; /* JS lo muestra cuando hace falta */
+  display: none;
 }
 
 .mensaje.mostrar {
@@ -862,13 +1108,13 @@ a {
 }
 
 .mensaje.exito {
-  background-color: #0d2a1a; /* ⭐ AZUL/NEGRO: fondo oscuro en vez del verde claro */
+  background-color: #0d2a1a;
   color: var(--color-exito);
   border: 1px solid var(--color-exito);
 }
 
 .mensaje.error {
-  background-color: #2a0f0d; /* ⭐ AZUL/NEGRO: fondo oscuro en vez del rojo claro */
+  background-color: #2a0f0d;
   color: var(--color-error);
   border: 1px solid var(--color-error);
 }
@@ -882,10 +1128,15 @@ a {
 .enlace-secundario a {
   font-weight: bold;
   text-decoration: underline;
-  color: var(--color-acento); /* ⭐ AZUL/NEGRO */
+  color: var(--color-acento);
 }
 
-/* Fila con dos campos lado a lado (usado en pago.html) */
+.separador-formulario {
+  margin: 26px 0;
+  border: none;
+  border-top: 1px solid var(--color-gris-linea);
+}
+
 .fila-doble {
   display: flex;
   gap: 12px;
@@ -928,7 +1179,7 @@ a {
     border-right: none;
     border-bottom: var(--grosor-borde) solid var(--color-gris-linea);
   }
-  .inicio-titulo {
-    font-size: 40px;
+  .pasos-contenedor {
+    flex-direction: column;
   }
 }
