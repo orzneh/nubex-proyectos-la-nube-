@@ -96,6 +96,16 @@ const Nubex = (function () {
     static cerrar() {
       localStorage.removeItem("nubex_sesion");
     }
+     static exigir(mensaje = "Tenés que iniciar sesión para hacer eso.") {
+      const sesion = Sesion.obtener();
+      if (!sesion) {
+         const el = document.querySelector(".mensaje");
+      if (el) mostrarMensaje(el, mensaje, "error");
+         setTimeout(() => { window.location.href = "login.html"; }, 800);
+    return null;
+  }
+  return sesion;
+}
   }
 
   /* --------------------------------------------------------
