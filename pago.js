@@ -14,6 +14,7 @@
     }
 
     init() {
+      if (!Nubex.exigirSesion()) return;
       if (!this.formulario) return;
 
       this.validador = new ValidadorFormulario(this.formulario);
