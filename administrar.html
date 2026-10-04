@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NUBEX - Administrar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
@@ -61,10 +65,10 @@
         <div class="barra-espacio-contenedor">
           <div id="barra-espacio-relleno" class="barra-espacio-relleno" style="width:0%;"></div>
         </div>
-        <p id="texto-espacio" style="font-size:13px; color:#777; margin-top:0;"></p>
+        <p id="texto-espacio" class="texto-ayuda-panel"></p>
 
         <!-- Zona para subir archivos nuevos (archivos_subidos) -->
-        <label for="input-subir-archivo" class="zona-subida" style="display:block; cursor:pointer;">
+        <label for="input-subir-archivo" class="zona-subida">
           📤 Hacé clic acá para subir un archivo nuevo
         </label>
         <input type="file" id="input-subir-archivo" style="display:none;">
@@ -89,3 +93,4 @@
   <script src="administrar.js"></script>
 </body>
 </html>
+
