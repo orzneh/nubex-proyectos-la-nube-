@@ -15,6 +15,7 @@
     }
 
     init() {
+      if (!Nubex.exigirSesion()) return;
       if (!this.formulario) return;
       this.validador = new ValidadorFormulario(this.formulario);
       this.formulario.addEventListener("submit", (evento) => this.#manejarEnvio(evento));
