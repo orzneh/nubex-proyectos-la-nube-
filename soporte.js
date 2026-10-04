@@ -1,77 +1,74 @@
 /* ==========================================================
    SOPORTE.JS - Logica de soporte.html
    ==========================================================
-   Requiere que comun.js este cargado ANTES que este archivo
-   (usa leerLista, guardarLista, marcarCampoInvalido,
-   limpiarErroresFormulario, activarLimpiezaAlEscribir y
-   mostrarMensaje).
+   Requiere que comun.js este cargado antes (expone "Nubex").
    ========================================================== */
+(function () {
+  "use strict";
 
-/* --------------------------------------------------------
-   7) SOPORTE (soporte.html)
-   -------------------------------------------------------- */
+  const { ListaStorage, ValidadorFormulario, mostrarMensaje } = Nubex;
+  const ticketsStorage = new ListaStorage("nubex_tickets_soporte");
 
-function inicializarSoporte() {
-  const formularioSoporte = document.getElementById("form-soporte");
-  if (!formularioSoporte) return;
-
-  // Apagamos la validacion nativa del navegador (los globitos grises)
-  // para poder mostrar los avisos con la estetica de NUBEX
-  formularioSoporte.setAttribute("novalidate", "novalidate");
-  activarLimpiezaAlEscribir(formularioSoporte);
-
-  formularioSoporte.addEventListener("submit", function (evento) {
-    evento.preventDefault();
-
-    limpiarErroresFormulario(formularioSoporte);
-
-    const inputNombre = document.getElementById("nombre_user");
-    const inputTelefono = document.getElementById("num_tel_user");
-    const inputSolicitud = document.getElementById("solicitud_user");
-
-    const nombre_user = inputNombre.value.trim();
-    const num_tel_user = inputTelefono.value.trim();
-    const solicitud_user = inputSolicitud.value.trim();
-
-    const mensaje = document.getElementById("mensaje-soporte");
-
-    let formularioValido = true;
-
-    if (nombre_user === "") {
-      marcarCampoInvalido(inputNombre, "Ingresá tu nombre.");
-      formularioValido = false;
+  class PaginaSoporte {
+    constructor() {
+      this.formulario = document.getElementById("form-soporte");
     }
 
-    if (num_tel_user === "") {
-      marcarCampoInvalido(inputTelefono, "Ingresá tu número de teléfono.");
-      formularioValido = false;
+    init() {
+      if (!this.formulario) return;
+      this.validador = new ValidadorFormulario(this.formulario);
+      this.formulario.addEventListener("submit", (evento) => this.#manejarEnvio(evento));
     }
 
-    if (solicitud_user === "") {
-      marcarCampoInvalido(inputSolicitud, "Contanos en qué te podemos ayudar.");
-      formularioValido = false;
+    #manejarEnvio(evento) {
+      evento.preventDefault();
+      this.validador.limpiarTodos();
+
+      const inputNombre = document.getElementById("nombre_user");
+      const inputTelefono = document.getElementById("num_tel_user");
+      const inputSolicitud = document.getElementById("solicitud_user");
+      const mensaje = document.getElementById("mensaje-soporte");
+
+      const nombre_user = inputNombre.value.trim();
+      const num_tel_user = inputTelefono.value.trim();
+      const solicitud_user = inputSolicitud.value.trim();
+
+      let formularioValido = true;
+
+      if (nombre_user === "") {
+        this.validador.marcarInvalido(inputNombre, "Ingresá tu nombre.");
+        formularioValido = false;
+      }
+
+      if (num_tel_user === "") {
+        this.validador.marcarInvalido(inputTelefono, "Ingresá tu número de teléfono.");
+        formularioValido = false;
+      }
+
+      if (solicitud_user === "") {
+        this.validador.marcarInvalido(inputSolicitud, "Contanos en qué te podemos ayudar.");
+        formularioValido = false;
+      }
+
+      if (!formularioValido) {
+        mostrarMensaje(mensaje, "Revisá los campos marcados en rojo.", "error");
+        return;
+      }
+
+      // Guardamos la solicitud en la lista de "tickets" de soporte
+      const tickets = ticketsStorage.leer();
+      tickets.push({
+        nombre_user,
+        num_tel_user,
+        solicitud_user,
+        comentario_despues_llamada: "", // se completa despues, cuando el admin llame
+      });
+      ticketsStorage.guardar(tickets);
+
+      mostrarMensaje(mensaje, "Tu solicitud fue enviada. Te contactaremos pronto.", "exito");
+      this.formulario.reset();
     }
+  }
 
-    if (!formularioValido) {
-      mostrarMensaje(mensaje, "Revisá los campos marcados en rojo.", "error");
-      return;
-    }
-
-    // Guardamos la solicitud en una lista de "tickets" de soporte
-    const tickets = leerLista("nubex_tickets_soporte");
-    tickets.push({
-      nombre_user,
-      num_tel_user,
-      solicitud_user,
-      comentario_despues_llamada: "" // se completa despues, cuando el admin llame
-    });
-    guardarLista("nubex_tickets_soporte", tickets);
-
-    mostrarMensaje(mensaje, "Tu solicitud fue enviada. Te contactaremos pronto.", "exito");
-    formularioSoporte.reset();
-  });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  inicializarSoporte();
-});
+  document.addEventListener("DOMContentLoaded", () => new PaginaSoporte().init());
+})();
