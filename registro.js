@@ -15,6 +15,7 @@
     }
 
     init() {
+      if (!Nubex.exigirSesion()) return;
       if (!this.formulario) return; // esta pagina no es registro.html
 
       this.validador = new ValidadorFormulario(this.formulario);
