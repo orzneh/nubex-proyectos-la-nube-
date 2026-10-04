@@ -1,37 +1,39 @@
 /* ==========================================================
    COMPRAR.JS - Logica de comprar.html
    ==========================================================
-   Requiere que comun.js este cargado ANTES que este archivo
-   (usa activarSuscripcion).
+   Requiere que comun.js este cargado antes (expone "Nubex").
    ========================================================== */
+(function () {
+  "use strict";
 
-/* --------------------------------------------------------
-   4) COMPRAR PLAN (comprar.html)
-   -------------------------------------------------------- */
+  const { Espacio } = Nubex;
 
-function inicializarComprar() {
-  const botonesPlan = document.querySelectorAll(".boton-elegir-plan");
-  if (botonesPlan.length === 0) return;
+  class PaginaComprar {
+    constructor() {
+      this.botonesPlan = document.querySelectorAll(".boton-elegir-plan");
+    }
 
-  botonesPlan.forEach(function (boton) {
-    boton.addEventListener("click", function () {
+    init() {
+      if (this.botonesPlan.length === 0) return;
+      this.botonesPlan.forEach((boton) => {
+        boton.addEventListener("click", () => this.#elegirPlan(boton));
+      });
+    }
+
+    #elegirPlan(boton) {
       // Cada boton tiene un atributo data-plan con el nombre del plan
-      const suscripcion = boton.getAttribute("data-plan");
+      const plan = boton.getAttribute("data-plan");
+      localStorage.setItem("nubex_plan_elegido", plan);
 
-      // Guardamos el plan elegido para usarlo en la pagina de pago
-      localStorage.setItem("nubex_plan_elegido", suscripcion);
-
-      if (suscripcion === "Plan Gratuito") {
-        // El plan gratuito no necesita pago, activamos directo
-        activarSuscripcion(suscripcion);
+      if (plan === "Plan Gratuito") {
+        // El plan gratuito no necesita pago, se activa directo
+        Espacio.activarSuscripcion(plan);
         window.location.href = "administrar.html";
       } else {
         window.location.href = "pago.html";
       }
-    });
-  });
-}
+    }
+  }
 
-document.addEventListener("DOMContentLoaded", function () {
-  inicializarComprar();
-});
+  document.addEventListener("DOMContentLoaded", () => new PaginaComprar().init());
+})();
