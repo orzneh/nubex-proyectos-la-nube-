@@ -14,6 +14,7 @@
     }
 
     init() {
+      if (!Nubex.exigirSesion()) return;
       if (this.botonesPlan.length === 0) return;
       this.botonesPlan.forEach((boton) => {
         boton.addEventListener("click", () => this.#elegirPlan(boton));
