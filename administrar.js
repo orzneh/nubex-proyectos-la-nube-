@@ -43,8 +43,8 @@
     }
 
     init() {
-      if (!Nubex.exigirSesion()) return;
       if (!this.contenedorArchivos) return; // esta pagina no es administrar.html
+      if (!Sesion.exigir()) return; // toda la pagina requiere sesion
 
       // El nombre en la navbar ("Cuenta" -> nombre del cliente) y el href
       // del link ya los resuelve comun.js para TODAS las paginas, no hace
@@ -79,6 +79,7 @@
       if (!input) return;
 
       input.addEventListener("change", () => {
+        if (!Sesion.exigir()) return;
         const archivo = input.files[0];
         if (!archivo) return;
         this.subirArchivo(archivo.name, archivo.size);
@@ -104,6 +105,7 @@
       this.contenedorArchivos.addEventListener("click", (evento) => {
         const boton = evento.target.closest("[data-accion]");
         if (!boton) return;
+        if (!Sesion.exigir()) return;
 
         const indice = Number(boton.dataset.indice);
         const acciones = {
@@ -351,12 +353,16 @@
       });
 
       document.getElementById("boton-guardar-perfil").addEventListener("click", () => {
+        if (!Sesion.exigir()) return;
         this.#guardarPerfil(sesion, avatarSeleccionado);
       });
 
       const botonCambiarPass = document.getElementById("boton-cambiar-pass");
       if (botonCambiarPass) {
-        botonCambiarPass.addEventListener("click", () => this.#cambiarPassword(sesion));
+        botonCambiarPass.addEventListener("click", () => {
+          if (!Sesion.exigir()) return;
+          this.#cambiarPassword(sesion);
+        });
       }
 
       document.getElementById("boton-cerrar-sesion").addEventListener("click", () => {
@@ -467,6 +473,7 @@
         </div>`;
 
       document.getElementById("boton-enviar-comentario").addEventListener("click", () => {
+        if (!Sesion.exigir()) return;
         const texto = document.getElementById("comentario-ayuda").value.trim();
 
         if (texto === "") {
