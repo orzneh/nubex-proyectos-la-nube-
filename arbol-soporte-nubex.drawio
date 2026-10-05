@@ -1,0 +1,71 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="PrwWwivHRIANIWUYxtPK" name="Página-1">
+    <mxGraphModel dx="1900" dy="1882" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-9" edge="1" parent="1" source="8cNT_aT8RK9eKfTgftlc-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="8cNT_aT8RK9eKfTgftlc-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-16" connectable="0" parent="8cNT_aT8RK9eKfTgftlc-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si no envió uno&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0662" y="-1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-10" edge="1" parent="1" source="8cNT_aT8RK9eKfTgftlc-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="8cNT_aT8RK9eKfTgftlc-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-15" connectable="0" parent="8cNT_aT8RK9eKfTgftlc-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si ya envió una&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.1086" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Decisión: enviar consultas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="40" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-11" edge="1" parent="1" source="8cNT_aT8RK9eKfTgftlc-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="8cNT_aT8RK9eKfTgftlc-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-18" connectable="0" parent="8cNT_aT8RK9eKfTgftlc-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si es un reporte de error&amp;nbsp;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.1" y="4" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-12" edge="1" parent="1" source="8cNT_aT8RK9eKfTgftlc-2" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="8cNT_aT8RK9eKfTgftlc-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-17" connectable="0" parent="8cNT_aT8RK9eKfTgftlc-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si es una pregunta&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0614" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-13" edge="1" parent="1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="641.0000000000009" y="-40" as="sourcePoint" />
+            <mxPoint x="861" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-14" connectable="0" parent="8cNT_aT8RK9eKfTgftlc-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si es irrelevante&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.4489" as="geometry">
+            <mxPoint x="-39" y="-26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Evento: revisar mensaje&lt;/font&gt;" vertex="1">
+          <mxGeometry height="240" width="240" x="400" y="-160" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-3" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#f8cecc;strokeColor=#b85450;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 17: rechazar por 6 horas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="400" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-5" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 14: aceptar&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="840" y="-240" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-6" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#f8cecc;strokeColor=#b85450;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 16: rechazar&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="840" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="8cNT_aT8RK9eKfTgftlc-7" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 15: aceptar&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="840" y="-80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

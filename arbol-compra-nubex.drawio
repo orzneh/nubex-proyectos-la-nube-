@@ -1,0 +1,83 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="eN4_YV3kMBNO9l2W1gGY">
+    <mxGraphModel dx="1012" dy="547" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-5" edge="1" parent="1" source="CAC9tkpZpNzBpKpz1MTZ-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CAC9tkpZpNzBpKpz1MTZ-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-6" connectable="0" parent="CAC9tkpZpNzBpKpz1MTZ-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si elige el gratuito&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0068" y="6" as="geometry">
+            <mxPoint x="1" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-7" edge="1" parent="1" source="CAC9tkpZpNzBpKpz1MTZ-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CAC9tkpZpNzBpKpz1MTZ-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-8" connectable="0" parent="CAC9tkpZpNzBpKpz1MTZ-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si elige uno de pago&amp;nbsp;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0147" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Decisión: elegir un plan&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="10" y="202" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-2" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;div&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 3: conceder&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="520" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-12" edge="1" parent="1" source="CAC9tkpZpNzBpKpz1MTZ-4" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CAC9tkpZpNzBpKpz1MTZ-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-15" connectable="0" parent="CAC9tkpZpNzBpKpz1MTZ-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si los datos son incorrectos&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.062" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-13" edge="1" parent="1" source="CAC9tkpZpNzBpKpz1MTZ-4" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CAC9tkpZpNzBpKpz1MTZ-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-14" connectable="0" parent="CAC9tkpZpNzBpKpz1MTZ-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si los datos son correctos&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0083" y="-5" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Evento: corroborar datos de la tarjeta&lt;/font&gt;" vertex="1">
+          <mxGeometry height="240" width="240" x="520" y="282" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-18" edge="1" parent="1" source="CAC9tkpZpNzBpKpz1MTZ-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CAC9tkpZpNzBpKpz1MTZ-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-21" connectable="0" parent="CAC9tkpZpNzBpKpz1MTZ-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si no lo esta&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.025" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-19" edge="1" parent="1" source="CAC9tkpZpNzBpKpz1MTZ-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CAC9tkpZpNzBpKpz1MTZ-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-20" connectable="0" parent="CAC9tkpZpNzBpKpz1MTZ-19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;si si lo esta&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0374" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Evento: Corroborar si la tarjeta esta habilitada&lt;/font&gt;" vertex="1">
+          <mxGeometry height="240" width="240" x="960" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-11" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#f8cecc;strokeColor=#b85450;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 4:&amp;nbsp; rechazar&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="960" y="202" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-16" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#f8cecc;strokeColor=#b85450;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 5:&amp;nbsp; rechazar&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="1400" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="CAC9tkpZpNzBpKpz1MTZ-17" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;shapeInside=1;fixedSize=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Regla 6:&amp;nbsp; aceptar&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="1390" y="720" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
