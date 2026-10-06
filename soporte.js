@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  const { ListaStorage, ValidadorFormulario, mostrarMensaje } = Nubex;
+  const { ListaStorage, ValidadorFormulario, mostrarMensaje, requerirSesion } = Nubex;
   const ticketsStorage = new ListaStorage("nubex_tickets_soporte");
 
   class PaginaSoporte {
@@ -15,8 +15,8 @@
     }
 
     init() {
-      if (!Nubex.exigirSesion()) return;
       if (!this.formulario) return;
+      if (!requerirSesion()) return;
       this.validador = new ValidadorFormulario(this.formulario);
       this.formulario.addEventListener("submit", (evento) => this.#manejarEnvio(evento));
     }
