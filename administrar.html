@@ -2,6 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <!-- Si no hay sesion iniciada, redirige a login.html ANTES de que
+       se dibuje nada de esta pagina (evita que se pueda usar sin cuenta) -->
+  <script>
+    if (!localStorage.getItem("nubex_sesion")) {
+      window.location.replace("login.html");
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NUBEX - Administrar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,4 +100,3 @@
   <script src="administrar.js"></script>
 </body>
 </html>
-
