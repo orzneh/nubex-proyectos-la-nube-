@@ -94,7 +94,7 @@
 
       const usuarios = usuariosStorage.leer();
       const usuarioEncontrado = usuarios.find(
-        (u) => u.mail_nuevo.toLowerCase() === correoClave && u.password_nuevo === password
+        (u) => (u.mail_nuevo || "").toLowerCase() === correoClave && u.password_nuevo === password
       );
 
       if (usuarioEncontrado) {
