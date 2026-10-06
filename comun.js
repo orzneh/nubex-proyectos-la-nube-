@@ -27,6 +27,19 @@ const Nubex = (function () {
       "Plan Normal": 1000,
       "Plan Premium": 5000, // "ilimitado" simulado con un numero grande
     },
+
+    // ---- Reglas de los diagramas (arbol-*.drawio) ----
+    // Regla 8: el Plan Normal acepta directorios de hasta 50 GB
+    LIMITE_DIRECTORIO_PLAN_NORMAL_GB: 50,
+    // Regla 8.5: el Plan Normal permite 5 archivos comprimidos por mes
+    COMPRIMIDOS_POR_MES_PLAN_NORMAL: 5,
+    // Reglas 13 y 17: tras publicar un comentario / enviar una consulta
+    // hay que esperar 6 horas para volver a hacerlo
+    ESPERA_ENTRE_ENVIOS_MS: 6 * 60 * 60 * 1000,
+    // Regla 1/2: condiciones del nombre de usuario
+    NOMBRE_USUARIO_MIN: 3,
+    NOMBRE_USUARIO_MAX: 10,
+    NOMBRES_RESERVADOS: ["admin", "administrador", "nubex", "soporte", "root", "invitado"],
   });
 
   /* --------------------------------------------------------
@@ -102,6 +115,15 @@ const Nubex = (function () {
 
     static cerrar() {
       localStorage.removeItem("nubex_sesion");
+    }
+
+    // Identificador estable de quien esta logueado (el correo si tiene
+    // cuenta real; si entro con llave de acceso, el nombre "Invitado").
+    // Se usa para las esperas de 6 horas (reglas 13 y 17).
+    static identidad() {
+      const sesion = Sesion.obtener();
+      if (!sesion) return null;
+      return (sesion.correo_electronico || sesion.nombre_cliente || "invitado").toLowerCase();
     }
   }
 
@@ -318,6 +340,203 @@ const Nubex = (function () {
   }
 
   /* --------------------------------------------------------
+     REGLAS DE NEGOCIO (arbol-*.drawio)
+     --------------------------------------------------------
+     Cada funcion devuelve { ok: true } o { ok: false, motivo }.
+     Los numeros de regla (R1, R7.5, R13...) son los de los diagramas.
+     -------------------------------------------------------- */
+
+  // "gratuito" | "normal" | "premium" (cualquier plan desconocido cuenta como gratuito)
+  function categoriaPlan(plan) {
+    if (plan === "Plan Premium") return "premium";
+    if (plan === "Plan Normal") return "normal";
+    return "gratuito";
+  }
+
+  const EXTENSIONES_COMPRIMIDAS = ["ZIP", "RAR", "7Z", "TAR", "GZ", "TGZ", "BZ2", "XZ"];
+
+  function esArchivoComprimido(nombreArchivo) {
+    return EXTENSIONES_COMPRIMIDAS.includes(obtenerExtension(nombreArchivo));
+  }
+
+  // "5 h 59 min" / "12 min", para avisar cuanto falta de una espera
+  function formatearTiempoRestante(ms) {
+    let horas = Math.floor(ms / 3600000);
+    let minutos = Math.ceil((ms % 3600000) / 60000);
+    if (minutos === 60) {
+      horas += 1;
+      minutos = 0;
+    }
+    if (horas === 0) return `${Math.max(1, minutos)} min`;
+    return minutos === 0 ? `${horas} h` : `${horas} h ${minutos} min`;
+  }
+
+  // Espera de 6 horas entre envios, por usuario y por tipo ("comentario" / "soporte")
+  class EsperaEntreEnvios {
+    constructor(tipo, identidad) {
+      this.clave = `nubex_espera_${tipo}_${identidad}`;
+    }
+
+    milisRestantes() {
+      try {
+        const ultimo = Number(localStorage.getItem(this.clave));
+        if (!ultimo) return 0;
+        return Math.max(0, ultimo + CONFIG.ESPERA_ENTRE_ENVIOS_MS - Date.now());
+      } catch (error) {
+        console.warn("NUBEX: no se pudo leer la espera entre envios.", error);
+        return 0;
+      }
+    }
+
+    registrar() {
+      try {
+        localStorage.setItem(this.clave, String(Date.now()));
+      } catch (error) {
+        console.warn("NUBEX: no se pudo guardar la espera entre envios.", error);
+      }
+    }
+  }
+
+  // Cuantos archivos comprimidos subio el usuario en el mes en curso (regla 8.5).
+  // Es un contador aparte: borrar el archivo no devuelve la cuota del mes.
+  class CuotaComprimidos {
+    static #mesActual() {
+      const ahora = new Date();
+      return `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    static cantidadDelMes() {
+      try {
+        const datos = JSON.parse(localStorage.getItem("nubex_comprimidos_mes") || "null");
+        return datos && datos.mes === CuotaComprimidos.#mesActual() ? Number(datos.cantidad) || 0 : 0;
+      } catch (error) {
+        console.warn("NUBEX: contador de comprimidos corrupto, se reinicia.", error);
+        return 0;
+      }
+    }
+
+    static registrar() {
+      try {
+        localStorage.setItem(
+          "nubex_comprimidos_mes",
+          JSON.stringify({ mes: CuotaComprimidos.#mesActual(), cantidad: CuotaComprimidos.cantidadDelMes() + 1 })
+        );
+      } catch (error) {
+        console.warn("NUBEX: no se pudo guardar el contador de comprimidos.", error);
+      }
+    }
+  }
+
+  const Reglas = {
+    // Registro - Decision "validar nombre": R1 guardar / R2 rechazar
+    validarNombreUsuario(nombre, usuarios = []) {
+      const { NOMBRE_USUARIO_MIN: min, NOMBRE_USUARIO_MAX: max, NOMBRES_RESERVADOS } = CONFIG;
+      if (nombre.length < min || nombre.length > max) {
+        return { ok: false, motivo: `El nombre de usuario debe tener entre ${min} y ${max} caracteres.` };
+      }
+      if (!/^[\p{L}\p{N}_.-]+$/u.test(nombre)) {
+        return { ok: false, motivo: "Usá solo letras, números, guion, guion bajo o punto (sin espacios)." };
+      }
+      if (NOMBRES_RESERVADOS.includes(nombre.toLowerCase())) {
+        return { ok: false, motivo: "Ese nombre de usuario no está permitido." };
+      }
+      if (usuarios.some((u) => (u.username_nuevo || "").toLowerCase() === nombre.toLowerCase())) {
+        return { ok: false, motivo: "Ese nombre de usuario ya está en uso." };
+      }
+      return { ok: true };
+    },
+
+    // Compra - "corroborar datos de la tarjeta": el vencimiento (MM/AA) no puede haber pasado
+    vencimientoVigente(texto) {
+      const coincidencia = /^(0[1-9]|1[0-2])\/(\d{2})$/.exec(texto);
+      if (!coincidencia) return false;
+      const mes = Number(coincidencia[1]);
+      const anio = 2000 + Number(coincidencia[2]);
+      const hoy = new Date();
+      // La tarjeta vale hasta el ultimo dia del mes de vencimiento
+      return anio > hoy.getFullYear() || (anio === hoy.getFullYear() && mes >= hoy.getMonth() + 1);
+    },
+
+    // Compra - "corroborar si la tarjeta esta habilitada": R5 rechazar / R6 aceptar.
+    // No hay banco real: se simula la consulta, y las tarjetas que terminan en
+    // 0000 figuran como NO habilitadas (sirve para probar la regla 5).
+    tarjetaHabilitada(numero) {
+      return !numero.endsWith("0000");
+    },
+
+    // Personalizar el perfil (avatar, nombre para mostrar, bio) - Decision
+    // "el usuario puede personalizarse": al intentarlo se verifica el plan.
+    // Segun arbol-personalisar-nubex.drawio: plan gratuito -> R22 (aceptar);
+    // plan de pago -> R23 (rechazar).
+    evaluarPersonalizacion(plan) {
+      if (categoriaPlan(plan) === "gratuito") return { ok: true };
+      return {
+        ok: false,
+        motivo: `Tu ${plan} no permite personalizar el perfil. Esa opción está disponible solo con el Plan Gratuito.`,
+      };
+    },
+
+    // Subida - Decision "subir directorios": R7 / R8 / R9
+    evaluarSubidaDirectorio(plan, tamanoBytes) {
+      const categoria = categoriaPlan(plan);
+      if (categoria === "gratuito") {
+        return { ok: false, motivo: "El Plan Gratuito no permite subir carpetas. Mejorá tu plan desde Comprar." };
+      }
+      if (categoria === "normal") {
+        const limiteBytes = CONFIG.LIMITE_DIRECTORIO_PLAN_NORMAL_GB * BYTES_POR_GB;
+        if (tamanoBytes > limiteBytes) {
+          return {
+            ok: false,
+            motivo: `El Plan Normal acepta carpetas de hasta ${CONFIG.LIMITE_DIRECTORIO_PLAN_NORMAL_GB} GB. Esta pesa ${formatearTamano(tamanoBytes)}. Con el Plan Premium no hay límite.`,
+          };
+        }
+      }
+      return { ok: true }; // premium: sin limite (R9)
+    },
+
+    // Subida - Decision "subir archivos comprimidos": R7.5 / R8.5 / R9.5
+    evaluarSubidaComprimido(plan) {
+      const categoria = categoriaPlan(plan);
+      if (categoria === "gratuito") {
+        return { ok: false, motivo: "El Plan Gratuito no permite subir archivos comprimidos. Mejorá tu plan desde Comprar." };
+      }
+      if (categoria === "normal" && CuotaComprimidos.cantidadDelMes() >= CONFIG.COMPRIMIDOS_POR_MES_PLAN_NORMAL) {
+        return {
+          ok: false,
+          motivo: `Ya subiste ${CONFIG.COMPRIMIDOS_POR_MES_PLAN_NORMAL} archivos comprimidos este mes, que es el máximo del Plan Normal. Con el Plan Premium no hay límite.`,
+        };
+      }
+      return { ok: true };
+    },
+
+    // Comentarios - Evento "comprobar las normas": R11 rechazar / R12 publicar
+    validarComentario(texto) {
+      if (texto.length < 5) {
+        return { ok: false, motivo: "El comentario es demasiado corto (mínimo 5 caracteres)." };
+      }
+      if (/https?:\/\/|www\./i.test(texto)) {
+        return { ok: false, motivo: "No se permiten enlaces en los comentarios." };
+      }
+      if (/(.)\1{9,}/u.test(texto)) {
+        return { ok: false, motivo: "El comentario parece spam (caracteres repetidos)." };
+      }
+      const prohibidas = ["idiota", "estupido", "estúpido", "imbecil", "imbécil", "mierda"];
+      const minusculas = texto.toLowerCase();
+      if (prohibidas.some((palabra) => minusculas.includes(palabra))) {
+        return { ok: false, motivo: "El comentario incumple las normas de convivencia (lenguaje ofensivo)." };
+      }
+      return { ok: true };
+    },
+
+    // Soporte - Evento "revisar mensaje": si no parece una pregunta ni un
+    // reporte de error se considera irrelevante (R16 rechazar)
+    esConsultaRelevante(texto) {
+      const palabras = texto.split(/\s+/).filter((palabra) => /\p{L}{2,}/u.test(palabra));
+      return texto.length >= 15 && palabras.length >= 3 && !/(.)\1{9,}/u.test(texto);
+    },
+  };
+
+  /* --------------------------------------------------------
      Corta el acceso a una pagina si no hay sesion iniciada. Es una
      segunda capa de seguridad ademas del script que ya corre en el
      <head> de cada pagina protegida (administrar, comprar, pago,
@@ -396,5 +615,10 @@ const Nubex = (function () {
     obtenerExtension,
     formatearTamano,
     requerirSesion,
+    Reglas,
+    EsperaEntreEnvios,
+    CuotaComprimidos,
+    esArchivoComprimido,
+    formatearTiempoRestante,
   };
 })();
