@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  const { ListaStorage, ValidadorFormulario, esCorreoValido, mostrarMensaje } = Nubex;
+  const { ListaStorage, ValidadorFormulario, Reglas, esCorreoValido, mostrarMensaje } = Nubex;
   const usuariosStorage = new ListaStorage("nubex_usuarios");
 
   class PaginaRegistro {
@@ -36,9 +36,17 @@
 
       let formularioValido = true;
 
+      // Decision "validar nombre": si esta permitido -> Regla 1 (se guarda);
+      // si no -> Regla 2 (se rechaza y se explica por que)
       if (username_nuevo === "") {
         this.validador.marcarInvalido(inputUsername, "Ingresá un nombre de usuario.");
         formularioValido = false;
+      } else {
+        const validacionNombre = Reglas.validarNombreUsuario(username_nuevo, usuariosStorage.leer());
+        if (!validacionNombre.ok) {
+          this.validador.marcarInvalido(inputUsername, validacionNombre.motivo);
+          formularioValido = false;
+        }
       }
 
       if (mail_nuevo === "") {
@@ -83,3 +91,4 @@
 
   document.addEventListener("DOMContentLoaded", () => new PaginaRegistro().init());
 })();
+
