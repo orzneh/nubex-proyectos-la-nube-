@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  const { Espacio } = Nubex;
+  const { Espacio, requerirSesion } = Nubex;
 
   class PaginaComprar {
     constructor() {
@@ -14,8 +14,8 @@
     }
 
     init() {
-      if (!Nubex.exigirSesion()) return;
       if (this.botonesPlan.length === 0) return;
+      if (!requerirSesion()) return;
       this.botonesPlan.forEach((boton) => {
         boton.addEventListener("click", () => this.#elegirPlan(boton));
       });
