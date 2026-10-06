@@ -15,7 +15,6 @@
     }
 
     init() {
-      if (!Nubex.exigirSesion()) return;
       if (!this.formulario) return; // esta pagina no es registro.html
 
       this.validador = new ValidadorFormulario(this.formulario);
@@ -63,7 +62,7 @@
       // Comparamos en minuscula para que "Ana@mail.com" y "ana@mail.com"
       // cuenten como el mismo correo
       const usuarios = usuariosStorage.leer();
-      const yaExiste = usuarios.some((u) => u.mail_nuevo.toLowerCase() === mail_nuevo.toLowerCase());
+      const yaExiste = usuarios.some((u) => (u.mail_nuevo || "").toLowerCase() === mail_nuevo.toLowerCase());
 
       if (yaExiste) {
         this.validador.marcarInvalido(inputMail, "Ya existe una cuenta con ese correo.");
