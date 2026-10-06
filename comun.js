@@ -51,7 +51,14 @@ const Nubex = (function () {
         const guardado = localStorage.getItem(this.clave);
         if (guardado === null) return [];
         const datos = JSON.parse(guardado);
-        return Array.isArray(datos) ? datos : [];
+        if (!Array.isArray(datos)) return [];
+
+        // Ademas de que el JSON este bien formado, cada elemento tiene que
+        // ser un objeto de verdad. Un "null" o un dato con forma vieja/rota
+        // suelto en la lista (restos de pruebas anteriores, versiones
+        // viejas del sitio, etc.) antes rompia en silencio cualquier
+        // pantalla que despues intentara leer un campo de ese elemento.
+        return datos.filter((item) => item !== null && typeof item === "object");
       } catch (error) {
         console.warn(`NUBEX: no se pudo leer "${this.clave}" de localStorage, se usa una lista vacia.`, error);
         return [];
@@ -96,16 +103,6 @@ const Nubex = (function () {
     static cerrar() {
       localStorage.removeItem("nubex_sesion");
     }
-     static exigir(mensaje = "Tenés que iniciar sesión para hacer eso.") {
-      const sesion = Sesion.obtener();
-      if (!sesion) {
-         const el = document.querySelector(".mensaje");
-      if (el) mostrarMensaje(el, mensaje, "error");
-         setTimeout(() => { window.location.href = "login.html"; }, 800);
-    return null;
-  }
-  return sesion;
-}
   }
 
   /* --------------------------------------------------------
@@ -321,6 +318,22 @@ const Nubex = (function () {
   }
 
   /* --------------------------------------------------------
+     Corta el acceso a una pagina si no hay sesion iniciada. Es una
+     segunda capa de seguridad ademas del script que ya corre en el
+     <head> de cada pagina protegida (administrar, comprar, pago,
+     soporte): ese script corta ANTES de que se dibuje nada, este
+     ademas valida que la sesion guardada sea realmente valida
+     (no un dato corrupto) antes de dejar seguir a la pagina.
+     -------------------------------------------------------- */
+  function requerirSesion() {
+    if (!Sesion.obtener()) {
+      window.location.replace("login.html");
+      return false;
+    }
+    return true;
+  }
+
+  /* --------------------------------------------------------
      Link "Cuenta" de la navbar: siempre apuntaba a login.html,
      sin importar si ya habia una sesion iniciada. Esto hace que
      si ya iniciaste sesion, apretar "Cuenta" te mande directo al
@@ -382,5 +395,6 @@ const Nubex = (function () {
     mostrarMensaje,
     obtenerExtension,
     formatearTamano,
+    requerirSesion,
   };
 })();
