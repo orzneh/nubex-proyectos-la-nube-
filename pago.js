@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  const { ValidadorFormulario, Espacio, mostrarMensaje, requerirSesion } = Nubex;
+  const { ValidadorFormulario, Espacio, Reglas, mostrarMensaje, requerirSesion } = Nubex;
 
   class PaginaPago {
     constructor() {
@@ -19,6 +19,13 @@
 
       this.validador = new ValidadorFormulario(this.formulario);
       this.planElegido = localStorage.getItem("nubex_plan_elegido") || "Plan Normal";
+
+      // Regla 3: el plan gratuito se concede directo, no pasa por el pago
+      if (this.planElegido === "Plan Gratuito") {
+        Espacio.activarSuscripcion(this.planElegido);
+        window.location.replace("administrar.html");
+        return;
+      }
 
       const etiquetaPlan = document.getElementById("etiqueta-plan-elegido");
       if (etiquetaPlan) etiquetaPlan.textContent = this.planElegido;
@@ -90,6 +97,8 @@
         marcarError("expir_tarjeta", "Ingresá el vencimiento.");
       } else if (!/^(0[1-9]|1[0-2])\/[0-9]{2}$/.test(valores.expir_tarjeta)) {
         marcarError("expir_tarjeta", "Usá el formato MM/AA.");
+      } else if (!Reglas.vencimientoVigente(valores.expir_tarjeta)) {
+        marcarError("expir_tarjeta", "La tarjeta está vencida.");
       }
 
       if (valores.cvv_tarjeta === "") {
@@ -108,8 +117,17 @@
         marcarError("codigo_postal", "El código postal es demasiado corto.");
       }
 
+      // Evento "corroborar datos de la tarjeta": si son incorrectos -> Regla 4 (rechazar)
       if (!formularioValido) {
-        mostrarMensaje(mensaje, "Revisá los campos marcados en rojo.", "error");
+        mostrarMensaje(mensaje, "Pago rechazado: revisá los campos marcados en rojo.", "error");
+        return;
+      }
+
+      // Evento "corroborar si la tarjeta esta habilitada":
+      // no lo esta -> Regla 5 (rechazar); si lo esta -> Regla 6 (aceptar)
+      if (!Reglas.tarjetaHabilitada(valores.num_tarjeta)) {
+        this.validador.marcarInvalido(campos.num_tarjeta, "Esta tarjeta no está habilitada.");
+        mostrarMensaje(mensaje, "Pago rechazado: la tarjeta no está habilitada para operar. Probá con otra.", "error");
         return;
       }
 
@@ -128,3 +146,4 @@
 
   document.addEventListener("DOMContentLoaded", () => new PaginaPago().init());
 })();
+
