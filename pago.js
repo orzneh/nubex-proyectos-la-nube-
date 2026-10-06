@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  const { ValidadorFormulario, Espacio, mostrarMensaje } = Nubex;
+  const { ValidadorFormulario, Espacio, mostrarMensaje, requerirSesion } = Nubex;
 
   class PaginaPago {
     constructor() {
@@ -14,8 +14,8 @@
     }
 
     init() {
-      if (!Nubex.exigirSesion()) return;
       if (!this.formulario) return;
+      if (!requerirSesion()) return;
 
       this.validador = new ValidadorFormulario(this.formulario);
       this.planElegido = localStorage.getItem("nubex_plan_elegido") || "Plan Normal";
