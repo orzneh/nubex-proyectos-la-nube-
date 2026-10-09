@@ -466,13 +466,12 @@ const Nubex = (function () {
 
     // Personalizar el perfil (avatar, nombre para mostrar, bio) - Decision
     // "el usuario puede personalizarse": al intentarlo se verifica el plan.
-    // Segun arbol-personalisar-nubex.drawio: plan gratuito -> R22 (aceptar);
-    // plan de pago -> R23 (rechazar).
+    // Plan gratuito -> R23 (rechazar); plan de pago (normal o premium) -> R22 (aceptar).
     evaluarPersonalizacion(plan) {
-      if (categoriaPlan(plan) === "gratuito") return { ok: true };
+      if (categoriaPlan(plan) !== "gratuito") return { ok: true };
       return {
         ok: false,
-        motivo: `Tu ${plan} no permite personalizar el perfil. Esa opción está disponible solo con el Plan Gratuito.`,
+        motivo: "El Plan Gratuito no permite personalizar el perfil. Mejorá tu plan desde Comprar.",
       };
     },
 
